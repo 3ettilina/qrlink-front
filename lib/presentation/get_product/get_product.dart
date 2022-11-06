@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qrlink/data/get_product_resources.dart';
+import 'package:qrlink/domain/products_logic.dart';
+import 'package:qrlink/domain/result/product_result.dart';
 import 'package:qrlink/presentation/constants/assets.dart';
 import 'package:qrlink/presentation/constants/strings.dart';
-import 'package:qrlink/presentation/widgets/get_product_state.dart';
+import 'package:qrlink/presentation/get_product/widgets/get_product_state.dart';
+import 'package:qrlink/presentation/product_details/product_details_view.dart';
 
 class GetProductScreen extends StatelessWidget {
   const GetProductScreen({
@@ -14,16 +16,19 @@ class GetProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: GetProductResources.getProductResource(gtin),
+    return FutureBuilder<ProductResult>(
+        future: ProductsLogic.getProductResources(gtin),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            switch (snapshot.requireData) {
-              case ResourceResponse.productNotFound:
+            final result = snapshot.requireData;
+            switch (result.type) {
+              case ProductResultType.hasResources:
+                return ProductView(product: result.product!);
+              case ProductResultType.notFound:
                 return GetProductState(
                     assetName: AppAssets.errorAnimation,
                     label: AppStrings.errorGtinNotFound(gtin));
-              case ResourceResponse.internalServerError:
+              case ProductResultType.error:
                 return GetProductState(
                     assetName: AppAssets.errorAnimation,
                     label: AppStrings.errorGeneric);
