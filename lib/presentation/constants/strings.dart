@@ -9,4 +9,5 @@ class AppStrings {
   static String addGtinToSearchLabel =
       'Ingresá el GTIN del producto para obtener más información del mismo:';
   static String search = 'BUSCAR';
+  static String productDetails = 'Recursos asociados al producto';
 }
