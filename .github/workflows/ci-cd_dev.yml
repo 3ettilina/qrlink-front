@@ -31,6 +31,8 @@ jobs:
           channel: 'stable'
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
+      - run: cd admin_panel
+      - run: flutter build web --web-renderer canvaskit
 
       # Deploy application to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV

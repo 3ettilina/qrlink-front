@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "qrlink-dev"
-  }
+  },
+  "targets": {
+    "qrlink-dev": {
+      "hosting": {
+        "admin-panel": [
+          "qrlink-dev-admin"
+        ],
+        "web": [
+          "qrlink-dev"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

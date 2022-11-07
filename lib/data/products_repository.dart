@@ -4,6 +4,28 @@ import 'package:qrlink/data/endpoints.dart';
 import 'package:qrlink/data/exceptions.dart';
 
 class ProductsRepository {
+  /// Returns the resource(s) of a given product (GTIN)
+  /// ```
+  /// {
+  ///  "gtin": "9506000134352",
+  ///  "name": Champiñón salvaje,
+  ///  "resource_url": "https://dalgiardino.com/mushroom-squash-risotto/",
+  ///  "resources": [
+  ///      {
+  ///          "name": "Receta con champiñón salvaje",
+  ///          "link_type": "gs1:recipeInfo",
+  ///          "language": "es",
+  ///          "resource_url": "https://dalgiardino.com/mushroom-squash-risotto/"
+  ///      },
+  ///      {
+  ///          "name": "Receta con champiñón salvaje",
+  ///          "link_type": "gs1:recipeInfo",
+  ///          "language": "es",
+  ///          "resource_url": "https://dalgiardino.com/mushroom-squash-risotto/"
+  ///      }
+  ///  ]
+  /// }
+  /// ```
   static Future<Map<String, dynamic>?> getProductResource(String gtin) async {
     final client = Dio();
 
@@ -36,12 +58,4 @@ class ProductsRepository {
       print(e);
     }
   }
-}
-
-enum ResourceResponse {
-  location(),
-  productNotFound(),
-  internalServerError();
-
-  const ResourceResponse();
 }
