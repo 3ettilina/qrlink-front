@@ -45,13 +45,12 @@ class Resource extends Component {
                 },  
                 value: '',
                 label: 'URL *'
-            },
-            showBody: false,
-            showBodyAfterExport: false,
-            showBodyError: false,
-            ErrorMessage: ''
-        }
-
+            }
+        },
+        showBody: false,
+        showBodyAfterExport: false,
+        showBodyError: false,
+        ErrorMessage: ''
     }
 
     filtersChangedHandler = (input, inputIdentifier) => {
