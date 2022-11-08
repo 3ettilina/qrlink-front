@@ -12,9 +12,7 @@ class Toolbar extends Component {
                     <p>
                     Panel de administración
                     </p>
-                </div>      
-                <div className='Toolbar-rest'>
-                </div>          
+                </div>            
             </div>
         );
     }

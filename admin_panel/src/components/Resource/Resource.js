@@ -60,7 +60,6 @@ class Resource extends Component {
         const updatedFilterElement = updateObject(this.state.filters[inputIdentifier], {value: inputValor });
         const updatedFilters = updateObject(this.state.filters, { [inputIdentifier] : updatedFilterElement });
         this.setState({filters: updatedFilters});
-        console.log(this.state.filters[inputIdentifier]);
     }
 
     addResource(){

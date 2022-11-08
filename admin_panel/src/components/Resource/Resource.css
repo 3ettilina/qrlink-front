@@ -33,6 +33,10 @@
     justify-content: center;
 }
 
+.Resource-fields .Filters label{
+    margin-left: 10px;
+}
+
 .Resource-fields .Button{
     margin-top: 25px;
     margin-bottom: 5px;   
