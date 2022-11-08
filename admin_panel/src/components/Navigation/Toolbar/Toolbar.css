@@ -1,0 +1,47 @@
+.Toolbar {
+    display: flex;
+  }
+  
+  .Toolbar-header {
+    background-color: #e0e0e0;
+    height: 8.5vh;
+    max-width: 700px;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: left;
+    font-size: calc(50 px);
+    color: rgb(93, 0, 146);
+  
+    border-bottom-width: 6px;
+    border-bottom-style: solid;
+    border-right-width: 3px;
+    border-right-style: solid;
+    border-image: linear-gradient(to bottom, #ffee00, #ffffff) 0 50% 50% 0;
+  }
+  
+  .Toolbar-header h1 {
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+    margin-left: 30px;
+  }
+  
+  .Toolbar-header p{
+    font-size: 12 px;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+    margin-left: 30px;
+  }
+
+  .Toolbar-rest {
+    background-color: rgb(93, 0, 146);
+    height: 8.5vh;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: left;
+    font-size: calc(50 px);
+    color: white; 
+
+    border-bottom-width: 6px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to bottom, #ffee00, #ffffff) 0 0 100% 0;
+  }

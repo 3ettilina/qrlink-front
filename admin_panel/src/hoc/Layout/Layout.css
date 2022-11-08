@@ -1,0 +1,6 @@
+.Componentes{
+    display: flex;
+    flex-direction: column;
+    height:91vh;
+    margin: 0;
+}

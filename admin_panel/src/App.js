@@ -1,19 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import Layout from './hoc/Layout/Layout';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-
-        <h1>
-          QR Link
-        </h1>
-        <p>
-          Panel de administración
-        </p>
-
-      </header>
+    <div>
+        <Layout />
     </div>
   );
 }
