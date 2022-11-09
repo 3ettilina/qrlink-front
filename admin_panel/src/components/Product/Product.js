@@ -130,7 +130,7 @@ class Product extends Component {
                 body=
                 <div>
                     <p><b>Nombre:</b> {this.props.name}</p>
-                    <p><b>URL:</b> {this.props.url}</p>
+                    <p><b>URL:</b> <a href={this.props.url}>{this.props.url}</a></p>
                     <p><b>GTIN:</b> {this.props.gtin}</p> 
                     <div className='Tabla'>
                         <MaterialTable
