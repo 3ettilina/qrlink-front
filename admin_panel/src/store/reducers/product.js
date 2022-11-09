@@ -2,7 +2,11 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
-    gtin: '',
+    gtin: "",
+    name: "",
+    language: "",
+    url: "",
+    resources: [],
     loading: false,
     muestroError: false,
     mensajeError: null
@@ -21,6 +25,10 @@ const getProductStart = ( state, action ) => {
 const getProductSuccess = ( state, action ) => {
     return updateObject( state, {
         gtin: action.gtin,
+        name: action.name,
+        language: action.language,
+        url: action.url,
+        resources: action.resources,
         loading: false
     } );
 };
