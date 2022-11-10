@@ -50,6 +50,6 @@ class ProductsLogic {
   }
 
   static void openProductResource(String resourceUrl) {
-    OpenUrl.byString(resourceUrl);
+    OpenUrl.blankByString(resourceUrl);
   }
 }
