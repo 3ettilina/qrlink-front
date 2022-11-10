@@ -37,7 +37,7 @@ jobs:
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
 
-      # Build Admin PAnel
+      # Build Admin Panel
       - run: echo "Building ADMIN's app"
       - run: pwd
       - run: ls
