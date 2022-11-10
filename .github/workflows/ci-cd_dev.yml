@@ -29,14 +29,22 @@ jobs:
         with:
           flutter-version: '3.0.5'
           channel: 'stable'
+
+      - run: echo "Building USER's app"
+      - run: pwd
+      - run: ls
       # Build User Web App
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
 
-      # Build Admin Panel
-      - run: cd admin_panel/
+      # Build Admin PAnel
+      - run: echo "Building ADMIN's app"
+      - run: pwd
+      - run: ls
+      - run: cd admin_panel
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
+      - run: cd .. # Go back to root
 
       # Deploy Web & Admin applications to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV
