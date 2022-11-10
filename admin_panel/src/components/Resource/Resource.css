@@ -1,8 +1,7 @@
 .Resource{
     flex: 1;
     max-width: 700px;
-    background-color: rgb(93, 0, 146);
-    color: white;
+    color: #ffee00;
     align-items: flex-start;
     justify-content: left;
 }
@@ -13,8 +12,11 @@
     margin-left: 30px;
   }
 
+  .Resource label{
+    color: white;
+  }
+
 .Resource-fields {
-    background-color:  rgb(46, 20, 54);
     margin-top: 30px;
     margin-left: 30px;
     margin-right: 30px;

@@ -6,6 +6,8 @@ import * as actions from '../../store/actions/index';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Modal from '../../components/UI/Modal/Modal.js';
+import Resource from '../Resource/Resource';
 import { updateObject} from '../../shared/utility';
 
 import Alert from '@material-ui/lab/Alert';
@@ -61,7 +63,8 @@ class Product extends Component {
             }
         },
         showBody: false,
-        showBodyAfterExport: ''
+        showBodyAfterExport: '',
+        showModal: false
 
     }
 
@@ -74,9 +77,16 @@ class Product extends Component {
         this.setState({filters: updatedFilters});
     }
 
+    modalHandler = () => {
+        this.setState( { showModal: true } );
+    }
+
+    modalCancelHandler = () => {
+        this.setState( { showModal: false } );
+    }
+
     getProduct = () => {
-        if(!this.props.floading
-            ){
+        if(!this.props.loading){
             let gtin = this.state.filters.gtin.value;
             this.props['onGetProduct'](gtin);
             this.setState({showBody: true, showBodyAfterExport: false });
@@ -165,7 +175,10 @@ class Product extends Component {
                                         tableLayout: 'fixed'
                                     }}
                                 />       
-                        </div>        
+                    </div>
+                    <div className='Button'>
+                        <Button btnType="Success" disabled={this.props.loading} clicked= {() => this.modalHandler()}>Agregar recurso</Button>   
+                    </div>        
                 </div>
             }
             
@@ -184,6 +197,11 @@ class Product extends Component {
                 <div className='Product-results'>
                     {this.state.showBody ? (this.state.showBodyAfterExport ? bodyAfterExport : body): null}
                 </div>
+                <Modal show={this.state.showModal} modalClosed={this.modalCancelHandler}>
+                    <Resource>
+                        {this.state.filters.gtin.value}
+                    </Resource>
+                </Modal>
             </div>
         );
     }

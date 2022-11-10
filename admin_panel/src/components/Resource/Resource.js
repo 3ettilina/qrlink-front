@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import './Resource.css';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject} from '../../shared/utility';
+
+import Alert from '@material-ui/lab/Alert';
 
 class Resource extends Component {
 
@@ -26,7 +30,7 @@ class Resource extends Component {
                     placeholder: ''
                 },  
                 value: '',
-                label: 'Tipo de link *'
+                label: 'Tipo de link'
             },
             idiomaRecurso: {
                 elementType: 'input',
@@ -48,10 +52,19 @@ class Resource extends Component {
             }
         },
         showBody: false,
-        showBodyAfterExport: false,
-        showBodyError: false,
-        ErrorMessage: ''
+        showBodyAfterExport: false
     }
+
+    /*componentDidMount = () => {
+        const mapStateToProps = state => {
+            return {
+                mensajeError: [],
+                muestroError: false,
+                mensajeSatisfactorio: [],
+                muestroSatisfactorio: false,
+            };
+        };
+    }*/
 
     filtersChangedHandler = (input, inputIdentifier) => {
         //OBTENGO EL VALOR INGRESADO
@@ -63,22 +76,16 @@ class Resource extends Component {
     }
 
     addResource(){
-        if (this.state.filters.nombreRecurso === ("" || null)){
-            
-        }else if (this.state.filters.tipoLink === ("" || null)){
-                
-        }else if (this.state.filters.url === ("" || null)){
-                
-        }else{
-            let nombreRecurso = this.state.filters.nombreRecurso;
-            let tipoLink = this.state.filters.tipoLink;
-            let url = this.state.filters.url;
-            let idiomaRecurso = this.state.filters.idiomaRecurso;
-            this.props['onAddResource'](nombreRecurso,tipoLink,idiomaRecurso,url);
+        if(!this.props.loading){
+            let gtin = this.props.children;
+            let nombreRecurso = this.state.filters.nombreRecurso.value;
+            let tipoLink = this.state.filters.tipoLink.value;
+            let url = this.state.filters.url.value;
+            let idiomaRecurso = this.state.filters.idiomaRecurso.value;
+            this.props['onAddResource'](gtin,nombreRecurso,tipoLink,idiomaRecurso,url);
             this.setState({showBody: true, showBodyAfterExport: false });
-        }
-    }
-    
+        }        
+    }    
     
     render() {
         const filtersArray = [];
@@ -90,7 +97,8 @@ class Resource extends Component {
         }
 
         let filters = (
-            <div>
+            <div>                
+                <h2>Agregar recurso</h2>
                 {filtersArray.map(filterElement => (
                     <div key = {filterElement.id} tabIndex="0" className='Filters'>
                         <label key={filterElement.id}>{filterElement.config.label}</label>
@@ -102,21 +110,62 @@ class Resource extends Component {
                             keyDown={(e) => e.preventDefault()}/>
                     </div>
                 ))}
+                <div className='Button'>
+                    <Button btnType="Success" disabled={this.props.loading} clicked= {() => this.addResource()}>CONFIRMAR</Button>   
+                </div> 
             </div>
         );
 
+        let body = null;
+        let bodyAfterExport = null;
+
+        body = filters;
+
+        if(this.props.loading){
+            body = <Spinner />
+            bodyAfterExport = body;
+        } else if (this.props.muestroError){
+            body =  
+            <div>
+                <Alert severity="error">
+                    {this.props.mensajeError.map((msg, i) => { return <div key={i}>{msg}</div> })}
+                </Alert> 
+                {filters}                      
+            </div>
+            bodyAfterExport = body;
+        } else if (this.props.muestroSatisfactorio){
+            body =
+            <div>
+                <Alert severity="success">
+                    {this.props.mensajeSatisfactorio.map((msg, i) => { return <div key={i}>{msg}</div> })}
+                </Alert>                   
+            </div>
+        }
+
         return (
         <div className="Resource">
-            <h2>Agregar recurso</h2>
             <div className="Resource-fields">
-                {filters}
-                <div className='Button'>
-                <Button btnType="Success" keyDown={(e) => e.preventDefault()} clicked= {() => this.getReport()}>AGREGAR RECURSO</Button>   
-                </div>            
+                {body}           
             </div>
         </div>
         );
     }
 }
-  
-export default Resource;
+
+const mapStateToProps = state => {
+    return {
+        loading: state.resource.loading,
+        mensajeError: [state.resource.mensajeError],
+        muestroError: state.resource.muestroError,
+        mensajeSatisfactorio: [state.resource.mensajeSatisfactorio],
+        muestroSatisfactorio: state.resource.muestroSatisfactorio,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddResource: (gtin,nombreRecurso,idiomaRecurso,tipoLink,url) => dispatch( actions.addResource(gtin,nombreRecurso,idiomaRecurso,tipoLink,url) )
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Resource);
