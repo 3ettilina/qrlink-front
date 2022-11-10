@@ -58,12 +58,19 @@ Widget _resourcesList(List<Resource> resources) {
                   onTap: () =>
                       ProductsLogic.openProductResource(res.resourceUrl),
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 16),
-                      child: Text(res.name),
+                    color: Colors.blueGrey[100],
+                    child: ListTile(
+                      leading: const Icon(Icons.link),
+                      title: Text(
+                        res.name,
+                        // style: TextStyle(color: Colors.white),
+                      ),
+                      subtitle: Text(res.linkType),
                     ),
                   ),
                 ),
