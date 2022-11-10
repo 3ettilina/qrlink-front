@@ -169,7 +169,7 @@ class Product extends Component {
                                     options={{
                                         sorting: true,
                                         pageSizeOptions: [50, 100, 250],
-                                        maxBodyHeight: "60vh",
+                                        maxBodyHeight: "40vh",
                                         pageSize:50,
                                         emptyRowsWhenPaging: false,
                                         tableLayout: 'fixed'

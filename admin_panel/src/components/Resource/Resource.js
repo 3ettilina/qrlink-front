@@ -78,15 +78,19 @@ class Resource extends Component {
     addResource(){
         if(!this.props.loading){
             let gtin = this.props.children;
-            let nombreRecurso = this.state.filters.nombreRecurso.value;
-            let tipoLink = this.state.filters.tipoLink.value;
-            let url = this.state.filters.url.value;
-            let idiomaRecurso = this.state.filters.idiomaRecurso.value;
-            this.props['onAddResource'](gtin,nombreRecurso,tipoLink,idiomaRecurso,url);
+            let name = this.state.filters.nombreRecurso.value;
+            let resourceLanguage = this.state.filters.idiomaRecurso.value;
+            let link_type = this.state.filters.tipoLink.value;
+            let resourceUrl = this.state.filters.url.value;
+            this.props['onAddResource'](gtin, name, resourceLanguage, link_type, resourceUrl);
             this.setState({showBody: true, showBodyAfterExport: false });
         }        
     }    
     
+    delay = () => {
+        setTimeout(() => window.location.reload(false), 3000);
+     }
+
     render() {
         const filtersArray = [];
         for (let key in this.state.filters) {
@@ -135,11 +139,12 @@ class Resource extends Component {
             bodyAfterExport = body;
         } else if (this.props.muestroSatisfactorio){
             body =
-            <div>
-                <Alert severity="success">
-                    {this.props.mensajeSatisfactorio.map((msg, i) => { return <div key={i}>{msg}</div> })}
-                </Alert>                   
-            </div>
+                <div>
+                    <Alert severity="success">
+                        {this.props.mensajeSatisfactorio.map((msg, i) => { return <div key={i}>{msg}</div> })}
+                    </Alert>                   
+                </div>
+            this.delay();
         }
 
         return (
@@ -164,7 +169,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddResource: (gtin,nombreRecurso,idiomaRecurso,tipoLink,url) => dispatch( actions.addResource(gtin,nombreRecurso,idiomaRecurso,tipoLink,url) )
+        onAddResource: (gtin, name, resourceLanguage, link_type, resourceUrl) => dispatch( actions.addResource(gtin, name, resourceLanguage, link_type, resourceUrl) )
     };
 };
 
