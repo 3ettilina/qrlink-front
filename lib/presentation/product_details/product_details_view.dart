@@ -14,27 +14,33 @@ class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resources = product.resources;
-    return Column(
+    return ListView(
+      scrollDirection: Axis.vertical,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32.0),
-          child: Center(
-            child: Text(
-              AppStrings.productDetails,
-              style: AppTextStyle.header,
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32.0),
+              child: Center(
+                child: Text(
+                  AppStrings.productDetails,
+                  style: AppTextStyle.header,
+                ),
+              ),
             ),
-          ),
+            Card(
+              color: Colors.lightGreen,
+              margin: const EdgeInsets.only(top: 10, bottom: 20),
+              elevation: 0,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+                child: Text(product.name),
+              ),
+            ),
+            _resourcesList(resources),
+          ],
         ),
-        Card(
-          color: Colors.lightGreen,
-          margin: const EdgeInsets.only(top: 10, bottom: 20),
-          elevation: 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
-            child: Text(product.name),
-          ),
-        ),
-        _resourcesList(resources),
       ],
     );
   }

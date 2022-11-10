@@ -10,65 +10,72 @@ class SearchProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 500,
-        child: Column(
-          children: [
-            LottieBuilder.asset(
-              AppAssets.welcome,
-            ),
-            Text(
-              AppStrings.welcome,
-              style: AppTextStyle.header,
-            ),
-            const SizedBox(
-              height: 36,
-            ),
-            Text(
-              AppStrings.addGtinToSearchLabel,
-              style: AppTextStyle.subHeader,
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return ListView(
+      scrollDirection: Axis.vertical,
+      children: [
+        Center(
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            width: 500,
+            child: Column(
               children: [
-                SizedBox(
-                  width: 250,
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), hintText: '32893489234'),
-                  ),
+                LottieBuilder.asset(
+                  AppAssets.welcome,
+                ),
+                Text(
+                  AppStrings.welcome,
+                  style: AppTextStyle.header,
                 ),
                 const SizedBox(
-                  width: 20,
+                  height: 36,
                 ),
-                InkWell(
-                  onTap: () {
-                    assert(_controller.text.isNotEmpty);
-                    ProductsLogic.openGetProductResources(_controller.text);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.indigoAccent,
+                Text(
+                  AppStrings.addGtinToSearchLabel,
+                  style: AppTextStyle.subHeader,
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 250,
+                      child: TextField(
+                        controller: _controller,
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: '32893489234'),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
-                    child: Text(
-                      AppStrings.search,
-                      style: const TextStyle(color: Colors.white),
+                    const SizedBox(
+                      width: 20,
                     ),
-                  ),
+                    InkWell(
+                      onTap: () {
+                        assert(_controller.text.isNotEmpty);
+                        ProductsLogic.openGetProductResources(_controller.text);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.indigoAccent,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        child: Text(
+                          AppStrings.search,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
