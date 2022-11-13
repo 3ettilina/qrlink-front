@@ -1,9 +1,13 @@
 {
   "hosting": [
     {
-      "public": "admin_panel/build",
-      "target": "admin-panel",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "public": "build/web",
+      "target": "web",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
       "rewrites": [
         {
           "source": "**",
@@ -12,9 +16,13 @@
       ]
     },
     {
-      "public": "build/web",
-      "target": "web",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "public": "admin_panel/build",
+      "target": "admin-panel",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
       "rewrites": [
         {
           "source": "**",
