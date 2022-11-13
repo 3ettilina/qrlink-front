@@ -42,9 +42,13 @@ jobs:
       - run: pwd
       - run: ls
       - run: cd admin_panel
+      - run: pwd
+      - run: ls
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
       - run: cd .. # Go back to root
+      - run: pwd
+      - run: ls
 
       # Deploy Web & Admin applications to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV
