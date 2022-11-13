@@ -47,7 +47,6 @@ jobs:
       # Deploy Web & Admin applications to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV
         uses: FirebaseExtended/action-hosting-deploy@v0
-        working-directory: ./
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.GCP_FIREBASE_HOSTING_DEV_SA_KEY }}"
