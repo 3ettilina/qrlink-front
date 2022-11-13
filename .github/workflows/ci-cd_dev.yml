@@ -29,9 +29,10 @@ jobs:
         with:
           flutter-version: '3.0.5'
           channel: 'stable'
-        run: |
-          flutter pub get
-          flutter build web --web-renderer canvaskit
+      
+      #- run: |
+      #    flutter pub get
+      #    flutter build web --web-renderer canvaskit
 
       # Build Flutter Web App (Admin side)
       - name: Build Flutter Web App
@@ -40,10 +41,7 @@ jobs:
         with:
           flutter-version: '3.0.5'
           channel: 'stable'
-        run: |
-          flutter pub get
-          flutter build web --web-renderer canvaskit
-
+          
       # Deploy Web & Admin applications to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV
         uses: FirebaseExtended/action-hosting-deploy@v0
