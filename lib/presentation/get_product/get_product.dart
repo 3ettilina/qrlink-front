@@ -9,15 +9,18 @@ import 'package:qrlink/presentation/product_details/product_details_view.dart';
 class GetProductScreen extends StatelessWidget {
   const GetProductScreen({
     required this.gtin,
+    this.linkType,
     Key? key,
   }) : super(key: key);
 
   final String gtin;
+  final String? linkType;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ProductResult>(
-        future: ProductsLogic.getProductResources(gtin),
+        future:
+            ProductsLogic.getProductResources(gtin: gtin, linkType: linkType),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final result = snapshot.requireData;

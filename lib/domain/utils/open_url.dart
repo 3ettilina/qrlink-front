@@ -10,8 +10,4 @@ class OpenUrl {
   static blankByString(String urlToOpen) {
     js.context.callMethod('open', [urlToOpen]);
   }
-
-  static openWebDevUrl(String text) {
-    OpenUrl.byString(WebUrls.webGetProductDetails(text));
-  }
 }
