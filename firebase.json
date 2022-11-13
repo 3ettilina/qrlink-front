@@ -16,7 +16,7 @@
       ]
     },
     {
-      "public": "admin_panel/build",
+      "public": "admin_panel/build/web",
       "target": "admin-panel",
       "ignore": [
         "firebase.json",

@@ -32,10 +32,11 @@ jobs:
       # Build User Web App
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
-      # Build Admin PAnel
-      - run: cd admin_panel
-      - run: npm run-script build
-      - run: cd .. # Go back to root
+
+      # Build Admin Panel
+      - run: cd admin_panel/
+      - run: flutter pub get
+      - run: flutter build web --web-renderer canvaskit
 
       # Deploy Web & Admin applications to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV
