@@ -23,25 +23,27 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
-      # Build Flutter Web App (User side)
-      - name: Build Flutter Web App
+      # Install Flutter
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.0.5'
           channel: 'stable'
       
-      #- run: |
-      #    flutter pub get
-      #    flutter build web --web-renderer canvaskit
-
-      # Build Flutter Web App (Admin side)
-      - name: Build Flutter Web App
-        uses: subosito/flutter-action@v2
+      - name: Build USER app
+        working-directory: ./
+        run: |
+          pwd
+          flutter pub get
+          flutter build web --web-renderer canvaskit
+      
+      - name: Build ADMIN app
         working-directory: ./admin_panel
-        with:
-          flutter-version: '3.0.5'
-          channel: 'stable'
-          
+        run: |
+          cd admin_panel
+          flutter pub get
+          flutter build web --web-renderer canvaskit
+
       # Deploy Web & Admin applications to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV
         uses: FirebaseExtended/action-hosting-deploy@v0
