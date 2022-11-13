@@ -33,15 +33,12 @@ jobs:
       - name: Build ADMIN app
         working-directory: ./admin_panel
         run: |
-          pwd
-          ls
           flutter pub get
           flutter build web --web-renderer canvaskit
       
       - name: Build USER app
         working-directory: ./
         run: |
-          pwd
           flutter pub get
           flutter build web --web-renderer canvaskit
 

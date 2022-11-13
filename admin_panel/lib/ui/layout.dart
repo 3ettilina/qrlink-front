@@ -51,7 +51,7 @@ class _AppLayoutState extends State<AppLayout> {
                     ),
                   ),
                   Text(
-                    'v1.0.0-2',
+                    'v1.0.0-3',
                     style: AppTextStyle.h4.copyWith(color: AppColors.lile_600),
                   ),
                 ],
