@@ -7,6 +7,10 @@ class OpenUrl {
     js.context.callMethod('open', [urlToOpen, '_self']);
   }
 
+  static blankByString(String urlToOpen) {
+    js.context.callMethod('open', [urlToOpen]);
+  }
+
   static openWebDevUrl(String text) {
     OpenUrl.byString(WebUrls.webGetProductDetails(text));
   }

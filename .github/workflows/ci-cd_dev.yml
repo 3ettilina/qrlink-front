@@ -29,12 +29,16 @@ jobs:
         with:
           flutter-version: '3.0.5'
           channel: 'stable'
+      # Build User Web App
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
-      - run: cd admin_panel
+
+      # Build Admin Panel
+      - run: cd admin_panel/
+      - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit
 
-      # Deploy application to Firebase Hosting
+      # Deploy Web & Admin applications to Firebase Hosting
       - name: Deploy to Firebase Hosting DEV
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
