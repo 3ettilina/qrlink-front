@@ -35,8 +35,8 @@ class Resource {
 
   static Map<String, dynamic> toJson({
     required String name,
-    required String linkType,
-    required String language,
+    String? linkType,
+    String? language,
     required String url,
   }) {
     try {

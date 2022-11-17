@@ -1,37 +1,44 @@
-import 'package:admin_panel/domain/logic/add_resource_to_product.dart';
-import 'package:admin_panel/domain/result/add_resource_result.dart';
+import 'package:admin_panel/domain/logic/add_product.dart';
+import 'package:admin_panel/domain/result/add_product_result.dart';
 import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
+import 'package:admin_panel/ui/constants/theme.dart';
 import 'package:flutter/material.dart';
 
-class AddForm extends StatefulWidget {
-  const AddForm({Key? key}) : super(key: key);
+class AddProductForm extends StatefulWidget {
+  const AddProductForm({Key? key}) : super(key: key);
 
   @override
-  State<AddForm> createState() => _AddFormState();
+  State<AddProductForm> createState() => _AddFormState();
 }
 
-class _AddFormState extends State<AddForm> {
+class _AddFormState extends State<AddProductForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final _gtin = '9506000134352';
-
-  String name = '';
-  String linkType = '';
-  String language = '';
-  String resourceUrl = '';
+  String _gtin = '';
+  String _name = '';
+  bool _onlyRedirect = false;
+  String _resourceUrl = '';
 
   void updateText({
+    String? gtin,
     String? name,
-    String? linkType,
-    String? language,
+    bool onlyRedirect = false,
     String? resourceUrl,
   }) {
     setState(() {
-      name = name;
-      name = linkType;
-      name = language;
-      resourceUrl = resourceUrl;
+      if (gtin != null) {
+        _gtin = gtin;
+      }
+      if (name != null) {
+        _name = name;
+      }
+      if (onlyRedirect != false) {
+        _onlyRedirect = onlyRedirect;
+      }
+      if (resourceUrl != null) {
+        _resourceUrl = resourceUrl;
+      }
     });
   }
 
@@ -46,28 +53,35 @@ class _AddFormState extends State<AddForm> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Row(
+                children: [
+                  Expanded(
+                      child: Text(
+                    'Solo redirección de recursos',
+                    style: AppTextStyle.subHeader,
+                  )),
+                  Switch(
+                      value: _onlyRedirect,
+                      onChanged: (value) => updateText(onlyRedirect: value)),
+                ],
+              ),
               InputText(
-                label: 'Nombre del recurso',
-                hintText: 'Ej: Receta',
-                validatorMessage: 'Por favor ingresa un nombre para el recurso',
+                label: 'Nombre del producto',
+                hintText: 'Ej: Salsa de tomate',
+                validatorMessage:
+                    'Por favor ingresa un nombre para el producto',
                 onChange: (value) => updateText(name: value),
               ),
               const SizedBox(height: 20),
               InputText(
-                label: 'Tipo de link',
-                hintText: 'Ej: gs1:recipeInfo',
-                validatorMessage: 'Por favor ingresa un tipo de link',
-                onChange: (value) => updateText(linkType: value),
+                label: 'Código GTIN',
+                hintText: 'Ej: 2637288989',
+                validatorMessage: 'Por favor ingresa un código para el GTIN',
+                onChange: (value) => updateText(gtin: value),
               ),
               const SizedBox(height: 20),
               InputText(
-                label: 'Idioma del recurso',
-                hintText: 'Ej: en',
-                onChange: (value) => updateText(language: value),
-              ),
-              const SizedBox(height: 20),
-              InputText(
-                label: 'URL del recurso',
+                label: 'URL por defecto del producto',
                 hintText: 'Ej: https://www.wildfooduk.com/mushroom-guide/',
                 validatorMessage: 'Por favor ingresa una URL',
                 onChange: (value) => updateText(resourceUrl: value),
@@ -90,16 +104,16 @@ class _AddFormState extends State<AddForm> {
                           backgroundColor: Colors.indigo,
                           content: Text(AddResourceStrings.addingResource)),
                     );
-                    final result = await AddResourceToProduct.call(
-                      gtin: _gtin, // TODO(betti): get by selected product
-                      resourceName: name,
-                      resourceLinkType: linkType,
-                      resourceLanguage: language,
-                      resourceUrl: resourceUrl,
+                    final result = await AddProduct.call(
+                      gtin: _gtin,
+                      name: _name,
+                      onlyRedirect:
+                          _onlyRedirect, // TODO(betti) set with Switch
+                      resourceUrl: _resourceUrl,
                     );
 
                     switch (result.type) {
-                      case AddResourceResultType.success:
+                      case AddProductResultType.success:
                         ScaffoldMessenger.of(context)
                           ..clearSnackBars()
                           ..showSnackBar(
@@ -111,7 +125,7 @@ class _AddFormState extends State<AddForm> {
                           );
                         _formKey.currentState?.reset();
                         break;
-                      case AddResourceResultType.alreadyExist:
+                      case AddProductResultType.gtinAlreadyExists:
                         ScaffoldMessenger.of(context)
                           ..clearSnackBars()
                           ..showSnackBar(
@@ -142,7 +156,7 @@ class _AddFormState extends State<AddForm> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      AddResourceStrings.addResource,
+                      AddResourceStrings.addProduct,
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     )
                   ],
