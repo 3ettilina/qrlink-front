@@ -3,4 +3,5 @@ class AppAssets {
   static String successAnimation = 'assets/success.json';
   static String loadingAnimation = 'assets/loading_dots.json';
   static String welcome = 'assets/welcome.json';
+  static String login = 'assets/login.json';
 }

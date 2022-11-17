@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:qrlink/presentation/admin/login/login_view.dart';
+import 'package:qrlink/presentation/admin/register/register_view.dart';
 import 'package:qrlink/presentation/home.dart';
 
 void main() async {
@@ -34,6 +36,10 @@ class MyApp extends StatelessWidget {
         gtin: gtin,
         appVersion: appVersion,
       ),
+      routes: {
+        '/login': (context) => LoginView(),
+        '/register': (context) => const RegisterView(),
+      },
     );
   }
 }
