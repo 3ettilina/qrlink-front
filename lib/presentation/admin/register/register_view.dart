@@ -93,10 +93,8 @@ class RegisterView extends StatelessWidget {
                 left: 30,
                 right: 30,
               )),
-              onPressed: () {
-                // Navigator.push(
-                //     context, MaterialPageRoute(builder: (_) => Home()));
-              },
+              //TODO: implementar logica register
+              onPressed: () { },
               child: const Text(
                 'Sign up',
                 style: TextStyle(color: Colors.white, fontSize: 15),
