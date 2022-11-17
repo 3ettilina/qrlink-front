@@ -1,10 +1,9 @@
 import 'package:admin_panel/data/endpoints.dart';
-import 'package:admin_panel/data/exceptions.dart';
+import 'package:admin_panel/data/exceptions/get_product_resources_exception.dart';
 import 'package:dio/dio.dart';
 
-class ProductsRepository {
-  static Future<bool> addResourceToProduct(
-      String gtin, Map<String, dynamic> resource) async {
+class AddResourceRepository {
+  static Future<bool> call(String gtin, Map<String, dynamic> resource) async {
     final client = Dio();
 
     try {

@@ -5,5 +5,7 @@ class BackEndpoints {
       Uri.https(baseUrlDev, '/getProductResources', {'gtin': gtin});
 
   static Uri addResourceToProduct(String gtin) =>
-      Uri.https(baseUrlDev, 'product/addResource', {'gtin': gtin});
+      Uri.https(baseUrlDev, '/product/addResource', {'gtin': gtin});
+
+  static Uri addProduct() => Uri.https(baseUrlDev, '/product/addProduct');
 }

@@ -2,25 +2,25 @@ import 'package:admin_panel/ui/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
-  InputText({
+  const InputText({
     required this.label,
     this.hintText,
     this.validatorMessage,
+    required this.onChange,
     Key? key,
   }) : super(key: key);
 
   final String label;
   final String? hintText;
   final String? validatorMessage;
-
-  final _controller = TextEditingController();
+  final Function(String?) onChange;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: _controller,
+      onChanged: onChange,
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (validatorMessage != null && (value == null || value.isEmpty)) {
           return validatorMessage;
         } else {
           return null;

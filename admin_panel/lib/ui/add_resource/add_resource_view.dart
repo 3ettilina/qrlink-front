@@ -1,4 +1,6 @@
+import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/add_resource/widgets/add_form.dart';
+import 'package:admin_panel/ui/common/section_title.dart';
 import 'package:admin_panel/ui/constants/colors.dart';
 import 'package:admin_panel/ui/constants/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,18 +22,9 @@ class _AddResourceViewState extends State<AddResourceView> {
       children: [
         Column(
           children: [
-            const SizedBox(
-              height: 50,
-            ),
-            Center(
-              child: Text(
-                'Agregar recurso',
-                style: AppTextStyle.header.copyWith(color: AppColors.lile_600),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 50),
+            const SectionTitle(label: AddResourceStrings.addResource),
+            const SizedBox(height: 30),
             Center(
               child: Text(
                 'GTIN: $_gtin',
@@ -46,7 +39,7 @@ class _AddResourceViewState extends State<AddResourceView> {
                 child: Card(
                   elevation: 2,
                   color: Colors.white.withOpacity(0.85),
-                  child: AddForm(),
+                  child: const AddForm(),
                 )),
           ],
         )

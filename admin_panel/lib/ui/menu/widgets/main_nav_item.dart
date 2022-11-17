@@ -20,6 +20,7 @@ class MainNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 60,
       decoration: isSelected
           ? BoxDecoration(
               border: Border(
@@ -39,19 +40,16 @@ class MainNavItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: isSelected ? AppColors.mustard : AppColors.lile_100,
+              color: isSelected ? AppColors.mustard : Colors.grey,
               size: isSelected ? 25 : 20,
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Text(
               label,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.normal,
-                  color:
-                      isSelected ? AppColors.lileShadow : AppColors.lile_100),
+                  color: isSelected ? AppColors.lileShadow : Colors.grey),
             )
           ],
         ),

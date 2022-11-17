@@ -1,15 +1,10 @@
-import 'package:admin_panel/data/exceptions.dart';
-import 'package:admin_panel/data/products_repository.dart';
+import 'package:admin_panel/data/exceptions/get_product_resources_exception.dart';
+import 'package:admin_panel/data/repository/add_resource_repository.dart';
 import 'package:admin_panel/domain/models/models.dart';
 import 'package:admin_panel/domain/result/add_resource_result.dart';
 
-class ProductsLogic {
-  // TODO(betti): Implement
-  static Future<List<Product>> getProducts() {
-    return Future.value(<Product>[]);
-  }
-
-  static Future<AddResourceResult> addResourceToProduct({
+class AddResourceToProduct {
+  static Future<AddResourceResult> call({
     required String gtin,
     required String resourceName,
     required String resourceLinkType,
@@ -24,7 +19,7 @@ class ProductsLogic {
     );
     try {
       final isResourseAdded =
-          await ProductsRepository.addResourceToProduct(gtin, resourceJson);
+          await AddResourceRepository.call(gtin, resourceJson);
       if (isResourseAdded) {
         return AddResourceResult(type: AddResourceResultType.success);
       } else {

@@ -39,6 +39,14 @@ class MenuPaneView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MainNavItem(
+                label: 'Agregar producto',
+                icon: Icons.local_shipping_outlined,
+                isSelected: selectedMenuItem == MenuOptions.addProduct,
+                onTap: () => mainNavAction(MenuOptions.addProduct)),
+            const SizedBox(
+              height: 16,
+            ),
+            MainNavItem(
                 label: 'Agregar recurso',
                 icon: Icons.add_circle_outline_outlined,
                 isSelected: selectedMenuItem == MenuOptions.addResource,
@@ -50,9 +58,7 @@ class MenuPaneView extends StatelessWidget {
               label: 'Productos',
               icon: Icons.shopping_bag_outlined,
               isSelected: selectedMenuItem == MenuOptions.productsList,
-              onTap: () => mainNavAction(
-                MenuOptions.productsList,
-              ),
+              onTap: () => mainNavAction(MenuOptions.productsList),
               isEnabled: false,
             ),
           ],

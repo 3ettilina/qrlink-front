@@ -1,3 +1,4 @@
+import 'package:admin_panel/ui/add_product/add_product_view.dart';
 import 'package:admin_panel/ui/add_resource/add_resource_view.dart';
 import 'package:admin_panel/ui/constants/colors.dart';
 import 'package:admin_panel/ui/constants/theme.dart';
@@ -62,6 +63,8 @@ class _AppLayoutState extends State<AppLayout> {
                     color: Colors.white,
                     child: Builder(builder: (context) {
                       switch (selectedMenuItem) {
+                        case MenuOptions.addProduct:
+                          return const AddProductView();
                         case MenuOptions.addResource:
                           return const AddResourceView();
                         case MenuOptions.productsList:
