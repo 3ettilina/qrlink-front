@@ -2,6 +2,7 @@ import 'package:admin_panel/domain/logic/add_product.dart';
 import 'package:admin_panel/domain/result/add_product_result.dart';
 import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
+import 'package:admin_panel/ui/constants/theme.dart';
 import 'package:flutter/material.dart';
 
 class AddProductForm extends StatefulWidget {
@@ -52,6 +53,18 @@ class _AddFormState extends State<AddProductForm> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Row(
+                children: [
+                  Expanded(
+                      child: Text(
+                    'Solo redirección de recursos',
+                    style: AppTextStyle.subHeader,
+                  )),
+                  Switch(
+                      value: _onlyRedirect,
+                      onChanged: (value) => updateText(onlyRedirect: value)),
+                ],
+              ),
               InputText(
                 label: 'Nombre del producto',
                 hintText: 'Ej: Salsa de tomate',
