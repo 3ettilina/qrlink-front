@@ -6,9 +6,11 @@ import 'package:qrlink/presentation/home.dart';
 
 void main() async {
   String? gtin = Uri.base.queryParameters["gtin"];
+  String? linkType = Uri.base.queryParameters["linkType"];
   final appVersion = await PackageInfo.fromPlatform();
   runApp(MyApp(
     gtin: gtin,
+    linkType: linkType,
     appVersion: 'v${appVersion.version}-${appVersion.buildNumber}',
   ));
 }
@@ -17,16 +19,19 @@ class MyApp extends StatelessWidget {
   const MyApp({
     Key? key,
     required this.gtin,
+    required this.linkType,
     required this.appVersion,
   }) : super(key: key);
 
   final String? gtin;
+  final String? linkType;
   final String appVersion;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'QR Link',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
@@ -34,6 +39,7 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(
         title: 'QR Link',
         gtin: gtin,
+        linkType: linkType,
         appVersion: appVersion,
       ),
       routes: {
@@ -50,9 +56,11 @@ class MyHomePage extends StatelessWidget {
     required this.title,
     required this.appVersion,
     this.gtin,
+    this.linkType,
   }) : super(key: key);
   final String title;
   final String? gtin;
+  final String? linkType;
   final String appVersion;
 
   @override
@@ -61,6 +69,7 @@ class MyHomePage extends StatelessWidget {
       title: title,
       appVersion: appVersion,
       gtin: gtin,
+      linkType: linkType,
     );
   }
 }

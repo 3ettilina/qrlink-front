@@ -4,15 +4,19 @@ import 'package:qrlink/data/endpoints.dart';
 import 'package:qrlink/data/exceptions.dart';
 
 class ProductsRepository {
-  static Future<Map<String, dynamic>?> getProductResource(String gtin) async {
+  static Future<Map<String, dynamic>?> getProductResource({
+    required String gtin,
+    String? linkType,
+  }) async {
     final client = Dio();
 
+    // Get current language
     String? completeLang = await Devicelocale.currentLocale;
     String? lang = completeLang?.split('-')[0];
 
     try {
       var response = await client.getUri(
-          BackEndpoints.getProductResources(gtin),
+          BackEndpoints.getProductResources(gtin: gtin, linkType: linkType),
           options: Options(
               followRedirects: false,
               validateStatus: (status) => status! < 400,
@@ -36,12 +40,4 @@ class ProductsRepository {
       print(e);
     }
   }
-}
-
-enum ResourceResponse {
-  location(),
-  productNotFound(),
-  internalServerError();
-
-  const ResourceResponse();
 }
