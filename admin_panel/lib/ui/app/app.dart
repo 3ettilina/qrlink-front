@@ -1,7 +1,10 @@
 import 'package:admin_panel/ui/add_product/add_product_view.dart';
 import 'package:admin_panel/ui/add_resource/add_resource_view.dart';
 import 'package:admin_panel/ui/app/common/common.dart';
+import 'package:admin_panel/ui/app/common/menu/menu.dart';
 import 'package:admin_panel/ui/app/constants/constants.dart';
+import 'package:admin_panel/ui/app/constants/strings.dart';
+import 'package:admin_panel/ui/constants/constants.dart';
 import 'package:admin_panel/ui/products/products_view.dart';
 import 'package:flutter/material.dart';
 
