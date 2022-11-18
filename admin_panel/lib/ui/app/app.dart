@@ -3,10 +3,9 @@ import 'package:admin_panel/ui/add_resource/add_resource_view.dart';
 import 'package:admin_panel/ui/app/common/common.dart';
 import 'package:admin_panel/ui/app/common/menu/menu.dart';
 import 'package:admin_panel/ui/app/constants/constants.dart';
-import 'package:admin_panel/ui/app/constants/strings.dart';
-import 'package:admin_panel/ui/constants/constants.dart';
 import 'package:admin_panel/ui/products/products_view.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
@@ -17,6 +16,20 @@ class AppLayout extends StatefulWidget {
 
 class _AppLayoutState extends State<AppLayout> {
   MenuOptions selectedMenuItem = MenuOptions.addResource;
+  late String appVersion;
+
+  @override
+  void initState() {
+    getAppInfo();
+    super.initState();
+  }
+
+  Future<void> getAppInfo() async {
+    final appInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      appVersion = '${appInfo.version}-${appInfo.buildNumber}';
+    });
+  }
 
   void _selectMenuOption(MenuOptions newOption) => setState(() {
         selectedMenuItem = newOption;
@@ -53,7 +66,7 @@ class _AppLayoutState extends State<AppLayout> {
                     ),
                   ),
                   Text(
-                    'appVersion',
+                    appVersion,
                     style: AppTextStyle.h4.copyWith(color: AppColors.lile_600),
                   ),
                 ],

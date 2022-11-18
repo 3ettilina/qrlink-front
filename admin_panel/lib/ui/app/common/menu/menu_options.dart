@@ -6,8 +6,8 @@ enum MenuOptions {
   addResource(AppStrings.addResource, Icons.add_circle_outline_outlined),
   productsList(AppStrings.products, Icons.shopping_bag_outlined);
 
-  const MenuOptions(this.name, this.icon);
+  const MenuOptions(this.label, this.icon);
 
-  final String name;
+  final String label;
   final IconData icon;
 }

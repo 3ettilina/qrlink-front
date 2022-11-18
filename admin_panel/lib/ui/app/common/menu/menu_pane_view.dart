@@ -39,7 +39,7 @@ class MenuPaneView extends StatelessWidget {
                   (menuOption) => Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: MainNavItem(
-                        label: menuOption.name,
+                        label: menuOption.label,
                         icon: menuOption.icon,
                         isSelected: selectedMenuItem == menuOption,
                         onTap: () => mainNavAction(menuOption)),
