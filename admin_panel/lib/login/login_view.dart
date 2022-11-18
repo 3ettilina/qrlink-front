@@ -1,9 +1,9 @@
+import 'package:admin_panel/register/register_view.dart';
+import 'package:admin_panel/ui/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:qrlink/presentation/admin/register/register_view.dart';
-import 'package:qrlink/presentation/constants/assets.dart';
-import 'package:qrlink/presentation/constants/theme.dart';
-import 'package:qrlink/presentation/home.dart';
+
+import '../ui/constants/theme.dart';
 
 // class LoginDemo extends StatelessWidget {
 //   @override
@@ -41,7 +41,7 @@ class LoginView extends StatelessWidget {
                     width: 200,
                     height: 150,
                     child: LottieBuilder.asset(
-                      AppAssets.login,
+                      AppAssets.qrlinkLogin,
                     )),
               ),
             ),

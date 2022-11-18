@@ -39,10 +39,12 @@ dependencies:
   dio: ^4.0.6
   devicelocale: ^0.5.5
   package_info_plus: ^3.0.1
+  admin_panel:
+    - "./admin_panel/"
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter
+    sdk: flutter\
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

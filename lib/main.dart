@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:qrlink/presentation/admin/login/login_view.dart';
-import 'package:qrlink/presentation/admin/register/register_view.dart';
 import 'package:qrlink/presentation/home.dart';
+import 'package:admin_panel';
 
 void main() async {
   String? gtin = Uri.base.queryParameters["gtin"];

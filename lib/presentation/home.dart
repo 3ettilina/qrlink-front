@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrlink/presentation/admin/login/login_view.dart';
-import 'package:qrlink/presentation/admin/register/register_view.dart';
 import 'package:qrlink/presentation/get_product/get_product.dart';
 import 'package:qrlink/presentation/search_product/search_product_view.dart';
 

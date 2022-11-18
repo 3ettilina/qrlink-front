@@ -1,5 +1,5 @@
+import 'package:admin_panel/ui/constants/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:qrlink/presentation/constants/theme.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({Key? key}) : super(key: key);
