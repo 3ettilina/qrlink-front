@@ -39,8 +39,6 @@ dependencies:
   dio: ^4.0.6
   devicelocale: ^0.5.5
   package_info_plus: ^3.0.1
-  admin_panel:
-    - "./admin_panel/"
 
 dev_dependencies:
   flutter_test:
