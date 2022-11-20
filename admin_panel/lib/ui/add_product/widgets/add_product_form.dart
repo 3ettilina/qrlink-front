@@ -2,7 +2,7 @@ import 'package:admin_panel/domain/logic/add_product.dart';
 import 'package:admin_panel/domain/result/add_product_result.dart';
 import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
-import 'package:admin_panel/ui/constants/theme.dart';
+import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class AddProductForm extends StatefulWidget {

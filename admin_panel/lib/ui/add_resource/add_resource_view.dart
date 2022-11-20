@@ -1,8 +1,7 @@
 import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/add_resource/widgets/add_form.dart';
-import 'package:admin_panel/ui/common/section_title.dart';
-import 'package:admin_panel/ui/constants/colors.dart';
-import 'package:admin_panel/ui/constants/theme.dart';
+import 'package:admin_panel/ui/app/common/section_title.dart';
+import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class AddResourceView extends StatefulWidget {

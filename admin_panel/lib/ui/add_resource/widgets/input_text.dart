@@ -1,4 +1,4 @@
-import 'package:admin_panel/ui/constants/colors.dart';
+import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {

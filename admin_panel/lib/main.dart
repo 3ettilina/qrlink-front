@@ -1,4 +1,5 @@
-import 'package:admin_panel/ui/layout.dart';
+import 'package:admin_panel/ui/app/app.dart';
+import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,19 +13,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'QRLink - Admin Panel',
+      title: AppStrings.appTitle,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'QRLink - Admin Panel'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

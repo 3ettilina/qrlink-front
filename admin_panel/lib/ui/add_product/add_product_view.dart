@@ -1,5 +1,5 @@
 import 'package:admin_panel/ui/add_product/widgets/add_product_form.dart';
-import 'package:admin_panel/ui/common/section_title.dart';
+import 'package:admin_panel/ui/app/common/section_title.dart';
 import 'package:flutter/material.dart';
 
 class AddProductView extends StatelessWidget {
