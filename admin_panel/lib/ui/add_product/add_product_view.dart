@@ -1,5 +1,5 @@
 import 'package:admin_panel/ui/add_product/widgets/add_product_form.dart';
-import 'package:admin_panel/ui/app/common/section_title.dart';
+import 'package:admin_panel/ui/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class AddProductView extends StatelessWidget {
@@ -12,9 +12,7 @@ class AddProductView extends StatelessWidget {
       height: double.infinity,
       child: Column(
         children: [
-          const SizedBox(height: 50),
           const SectionTitle(label: 'Agregar producto'),
-          const SizedBox(height: 30),
           SizedBox(
               width: 450,
               child: Card(

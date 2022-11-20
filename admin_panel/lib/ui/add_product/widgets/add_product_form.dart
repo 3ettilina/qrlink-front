@@ -3,6 +3,7 @@ import 'package:admin_panel/domain/result/add_product_result.dart';
 import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
 import 'package:admin_panel/ui/app/constants/constants.dart';
+import 'package:admin_panel/ui/app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class AddProductForm extends StatefulWidget {
@@ -99,11 +100,12 @@ class _AddFormState extends State<AddProductForm> {
                   if (_formKey.currentState!.validate()) {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          backgroundColor: Colors.indigo,
-                          content: Text(AddResourceStrings.addingResource)),
+
+                    showCommonSnackbar(
+                      context,
+                      message: AddResourceStrings.addingResource,
                     );
+
                     final result = await AddProduct.call(
                       gtin: _gtin,
                       name: _name,
@@ -114,35 +116,26 @@ class _AddFormState extends State<AddProductForm> {
 
                     switch (result.type) {
                       case AddProductResultType.success:
-                        ScaffoldMessenger.of(context)
-                          ..clearSnackBars()
-                          ..showSnackBar(
-                            SnackBar(
-                                backgroundColor:
-                                    Colors.greenAccent.withOpacity(0.85),
-                                content: const Text(AddResourceStrings
-                                    .resourceAddedSuccesfully)),
-                          );
+                        showCommonSnackbar(
+                          context,
+                          message: AddResourceStrings.resourceAddedSuccesfully,
+                          type: SnackbarType.success,
+                        );
                         _formKey.currentState?.reset();
                         break;
                       case AddProductResultType.gtinAlreadyExists:
-                        ScaffoldMessenger.of(context)
-                          ..clearSnackBars()
-                          ..showSnackBar(
-                            SnackBar(
-                                backgroundColor: Colors.red.withOpacity(0.85),
-                                content: Text(result.type.message ?? '')),
-                          );
+                        showCommonSnackbar(
+                          context,
+                          message: result.type.message ?? '',
+                          type: SnackbarType.failure,
+                        );
                         break;
                       default:
-                        ScaffoldMessenger.of(context)
-                          ..clearSnackBars()
-                          ..showSnackBar(
-                            SnackBar(
-                                backgroundColor:
-                                    Colors.redAccent.withOpacity(0.85),
-                                content: Text(result.type.message ?? '')),
-                          );
+                        showCommonSnackbar(
+                          context,
+                          message: result.type.message ?? '',
+                          type: SnackbarType.failure,
+                        );
                         break;
                     }
                   }

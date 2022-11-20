@@ -30,11 +30,13 @@ class InputText extends StatelessWidget {
           filled: true,
           fillColor: Colors.white,
           labelText: label,
+          labelStyle: AppTextStyle.h4,
           floatingLabelStyle: TextStyle(color: AppColors.lile_100),
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.lile_100, width: 2)),
           border: const OutlineInputBorder(),
-          hintText: hintText),
+          hintText: hintText,
+          hintStyle: AppTextStyle.h4),
     );
   }
 }

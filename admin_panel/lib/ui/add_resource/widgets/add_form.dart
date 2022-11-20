@@ -1,20 +1,17 @@
-import 'package:admin_panel/domain/logic/add_resource_to_product.dart';
-import 'package:admin_panel/domain/result/add_resource_result.dart';
 import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
+import 'package:admin_panel/ui/app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
-class AddForm extends StatefulWidget {
-  const AddForm({Key? key}) : super(key: key);
+class AddResource extends StatefulWidget {
+  const AddResource({Key? key}) : super(key: key);
 
   @override
-  State<AddForm> createState() => _AddFormState();
+  State<AddResource> createState() => _AddResourceFormState();
 }
 
-class _AddFormState extends State<AddForm> {
+class _AddResourceFormState extends State<AddResource> {
   final _formKey = GlobalKey<FormState>();
-
-  final _gtin = '9506000134352';
 
   String name = '';
   String linkType = '';
@@ -43,7 +40,7 @@ class _AddFormState extends State<AddForm> {
         key: _formKey,
         child: FocusTraversalGroup(
           policy: OrderedTraversalPolicy(),
-          child: Column(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               InputText(
@@ -83,54 +80,11 @@ class _AddFormState extends State<AddForm> {
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          backgroundColor: Colors.indigo,
-                          content: Text(AddResourceStrings.addingResource)),
+                    showCommonSnackbar(
+                      context,
+                      message: AddResourceStrings.addingResource,
+                      type: SnackbarType.info,
                     );
-                    final result = await AddResourceToProduct.call(
-                      gtin: _gtin, // TODO(betti): get by selected product
-                      resourceName: name,
-                      resourceLinkType: linkType,
-                      resourceLanguage: language,
-                      resourceUrl: resourceUrl,
-                    );
-
-                    switch (result.type) {
-                      case AddResourceResultType.success:
-                        ScaffoldMessenger.of(context)
-                          ..clearSnackBars()
-                          ..showSnackBar(
-                            SnackBar(
-                                backgroundColor:
-                                    Colors.greenAccent.withOpacity(0.85),
-                                content: const Text(AddResourceStrings
-                                    .resourceAddedSuccesfully)),
-                          );
-                        _formKey.currentState?.reset();
-                        break;
-                      case AddResourceResultType.alreadyExist:
-                        ScaffoldMessenger.of(context)
-                          ..clearSnackBars()
-                          ..showSnackBar(
-                            SnackBar(
-                                backgroundColor: Colors.red.withOpacity(0.85),
-                                content: Text(result.type.message ?? '')),
-                          );
-                        break;
-                      default:
-                        ScaffoldMessenger.of(context)
-                          ..clearSnackBars()
-                          ..showSnackBar(
-                            SnackBar(
-                                backgroundColor:
-                                    Colors.redAccent.withOpacity(0.85),
-                                content: Text(result.type.message ?? '')),
-                          );
-                        break;
-                    }
                   }
                 },
                 child: Row(

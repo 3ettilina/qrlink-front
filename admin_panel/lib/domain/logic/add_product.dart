@@ -1,5 +1,6 @@
 import 'package:admin_panel/data/exceptions/get_product_resources_exception.dart';
-import 'package:admin_panel/data/repository/add_product_repository.dart';
+import 'package:admin_panel/data/repository/products_repository.dart';
+import 'package:admin_panel/domain/repository/repository.dart';
 import 'package:admin_panel/domain/result/add_product_result.dart';
 
 class AddProduct {
@@ -10,7 +11,7 @@ class AddProduct {
     required String resourceUrl,
   }) async {
     try {
-      final isProductAdded = await AddProductRepository.call(
+      final isProductAdded = await Repository.productsRepository.addProduct(
         gtin: gtin,
         onlyRedirect: onlyRedirect,
         name: name,

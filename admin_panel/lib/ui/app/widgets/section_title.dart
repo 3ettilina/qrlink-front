@@ -11,7 +11,8 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      padding: const EdgeInsets.only(top: 20, bottom: 30),
       child: Text(
         label,
         style: AppTextStyle.header.copyWith(color: AppColors.lile_600),
