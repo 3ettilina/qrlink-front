@@ -1,5 +1,7 @@
-class Resource {
-  Resource({
+import 'package:equatable/equatable.dart';
+
+class Resource extends Equatable {
+  const Resource({
     required this.name,
     required this.linkType,
     required this.language,
@@ -7,9 +9,21 @@ class Resource {
   });
 
   final String name;
-  final String linkType;
+  final String? linkType;
   final String? language;
   final String resourceUrl;
+
+  factory Resource.builder({
+    String name = '',
+    String? language,
+    String? linkType,
+    String resourceUrl = '',
+  }) =>
+      Resource(
+          name: name,
+          linkType: linkType,
+          language: language,
+          resourceUrl: resourceUrl);
 
   factory Resource.toResource(Map<String, dynamic> resourceJson) {
     return Resource(
@@ -54,4 +68,7 @@ class Resource {
   static List<Resource> toResourceList(List<dynamic> resourcesJson) {
     return resourcesJson.map((res) => Resource.toResource(res)).toList();
   }
+
+  @override
+  List<Object?> get props => [name, linkType, language, resourceUrl];
 }

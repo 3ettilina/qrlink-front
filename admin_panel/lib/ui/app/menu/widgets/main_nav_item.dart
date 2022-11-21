@@ -1,4 +1,5 @@
 import 'package:admin_panel/ui/app/constants/constants.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class MainNavItem extends StatelessWidget {
@@ -14,11 +15,12 @@ class MainNavItem extends StatelessWidget {
   final String label;
   final IconData? icon;
   final bool isSelected;
-  final VoidCallback onTap;
   final bool isEnabled;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final router = context.router;
     return Container(
       height: 60,
       decoration: isSelected
@@ -33,14 +35,14 @@ class MainNavItem extends StatelessWidget {
           : null,
       child: MaterialButton(
         hoverColor: AppColors.lile_100,
-        color: AppColors.mustardShadow,
+        color: isSelected ? AppColors.mustardShadow : null,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         onPressed: isEnabled ? onTap : null,
         child: Row(
           children: [
             Icon(
               icon,
-              color: isSelected ? AppColors.mustard : Colors.grey,
+              color: isSelected ? AppColors.mustard : Colors.white,
               size: isSelected ? 25 : 20,
             ),
             const SizedBox(width: 10),
@@ -49,7 +51,7 @@ class MainNavItem extends StatelessWidget {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.normal,
-                  color: isSelected ? AppColors.lileShadow : Colors.grey),
+                  color: isSelected ? AppColors.lileShadow : Colors.white),
             )
           ],
         ),

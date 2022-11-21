@@ -1,11 +1,11 @@
-import 'package:admin_panel/ui/app/common/menu/menu.dart';
-import 'package:admin_panel/ui/app/common/menu/widgets/main_nav_item.dart';
+import 'package:admin_panel/ui/app/menu/menu.dart';
+import 'package:admin_panel/ui/app/menu/widgets/main_nav_item.dart';
 import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class MenuPaneView extends StatelessWidget {
   const MenuPaneView({
-    this.selectedMenuItem = MenuOptions.addResource,
+    required this.selectedMenuItem,
     required this.mainNavAction,
     Key? key,
   }) : super(key: key);
