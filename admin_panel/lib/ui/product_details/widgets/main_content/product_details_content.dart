@@ -63,10 +63,10 @@ class ProductDetailsContent extends StatelessWidget {
                 Expanded(
                     child: ResourcesListContent(resources: resourceListToShow)),
 
+              const SizedBox(height: 5),
               const AddResourceForm(),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
-              const Spacer(),
               const CommonDivider(),
               const SizedBox(height: 30),
               // DELETE PRODUCT
