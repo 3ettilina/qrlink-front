@@ -14,7 +14,12 @@ import 'package:auto_route/auto_route.dart';
       page: DashboardPage,
       children: [
         RedirectRoute(path: '', redirectTo: 'products'),
-        CustomRoute(path: 'products', page: ProductsPage, initial: true),
+        CustomRoute(
+          path: 'products',
+          page: ProductsPage,
+          initial: true,
+          maintainState: false,
+        ),
         CustomRoute(
             path: 'products/:gtin',
             page: ProductDetailsPage,

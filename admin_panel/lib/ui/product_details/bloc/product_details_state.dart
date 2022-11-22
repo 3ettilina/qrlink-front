@@ -6,6 +6,7 @@ enum ProductDetailsStatus {
   loading,
   ready,
   addingResource,
+  productDeleted,
   error,
 }
 
