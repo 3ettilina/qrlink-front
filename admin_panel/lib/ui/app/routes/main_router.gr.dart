@@ -43,6 +43,7 @@ class MainRouter extends _i7.RootStackRouter {
       return _i7.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i3.ProductsPage(),
+        maintainState: false,
         opaque: true,
         barrierDismissible: false,
       );

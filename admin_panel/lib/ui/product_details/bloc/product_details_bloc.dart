@@ -1,3 +1,4 @@
+import 'package:admin_panel/domain/logic/delete_product.dart';
 import 'package:admin_panel/domain/logic/get_product_details.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_event.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_state.dart';
@@ -9,6 +10,7 @@ class ProductDetailsBloc
       : super(const ProductDetailsState(status: ProductDetailsStatus.loading)) {
     on<ProductDetailsProductSelected>(_onProductSelected);
     on<ProductDetailsAddResourceTap>(_onAddResourceTap);
+    on<ProductDetailsDeleteProductRequested>(_onDeleteProductRequested);
   }
 
   Future<void> _onProductSelected(
@@ -37,5 +39,17 @@ class ProductDetailsBloc
     Emitter<ProductDetailsState> emit,
   ) {
     emit(state.copyWith(newStatus: ProductDetailsStatus.addingResource));
+  }
+
+  void _onDeleteProductRequested(
+    ProductDetailsDeleteProductRequested event,
+    Emitter<ProductDetailsState> emit,
+  ) async {
+    final result = await DeleteProduct.call(event.gtin);
+    if (result) {
+      emit(state.copyWith(newStatus: ProductDetailsStatus.productDeleted));
+    } else {
+      emit(state.copyWith(newStatus: ProductDetailsStatus.error));
+    }
   }
 }

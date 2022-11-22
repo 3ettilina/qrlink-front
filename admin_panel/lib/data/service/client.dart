@@ -34,4 +34,20 @@ class RestServiceClient {
         );
     return _client.getUri(uri, options: optionsForRequest);
   }
+
+  static Future<Response<T>> delete<T>({
+    required Uri uri,
+    Options? options,
+  }) {
+    final optionsForRequest = options ??
+        Options(
+          validateStatus: (status) => status == 200,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        );
+
+    return _client.deleteUri(uri, options: optionsForRequest);
+  }
 }
