@@ -22,18 +22,13 @@ class ResourceEntity {
     );
   }
 
-  static Map<String, dynamic> toJson({
-    required String name,
-    String? linkType,
-    String? language,
-    required String url,
-  }) {
+  static Map<String, dynamic> toJson(ResourceEntity resource) {
     try {
       return <String, dynamic>{
-        "name": name,
-        "link_type": linkType,
-        "language": language,
-        "resource_url": url,
+        "name": resource.name,
+        "link_type": resource.linkType,
+        "language": resource.language,
+        "resource_url": resource.resourceUrl,
       };
     } catch (e) {
       rethrow;

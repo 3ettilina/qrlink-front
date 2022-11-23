@@ -1,5 +1,4 @@
 import 'package:admin_panel/ui/add_product/add_product_page.dart';
-import 'package:admin_panel/ui/add_resource/add_resource_page.dart';
 import 'package:admin_panel/ui/app/app.dart';
 import 'package:admin_panel/ui/auth/login_page.dart';
 import 'package:admin_panel/ui/product_details/product_details_page.dart';
@@ -25,7 +24,6 @@ import 'package:auto_route/auto_route.dart';
             page: ProductDetailsPage,
             transitionsBuilder: TransitionsBuilders.zoomIn),
         CustomRoute(path: 'products/new', page: AddProductPage),
-        CustomRoute(path: 'products/:gtin/resources/new', page: AddResourcePage)
       ],
     ),
     AutoRoute(path: '/login', page: LoginPage)

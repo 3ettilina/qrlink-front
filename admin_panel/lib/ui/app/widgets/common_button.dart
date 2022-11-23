@@ -26,14 +26,9 @@ class CommonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
+    return ElevatedButton(
       onPressed: isEnabled ? onTap : null,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-        color: isEnabled ? AppColors.mustard_75 : AppColors.lile_600_15,
-        alignment: Alignment.center,
-        child: _child(),
-      ),
+      child: Center(child: _child()),
     );
   }
 }

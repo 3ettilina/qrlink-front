@@ -8,10 +8,11 @@ class ResourcesListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CustomListHeader(
       headerItems: [
-        Expanded(flex: 3, child: TableHeaderLabel(label: 'Nombre')),
-        Expanded(child: TableHeaderLabel(label: 'Idioma')),
-        Expanded(flex: 2, child: TableHeaderLabel(label: 'Link Type')),
-        Expanded(flex: 3, child: TableHeaderLabel(label: 'URL destino')),
+        Expanded(flex: 6, child: TableHeaderLabel(label: 'Nombre')),
+        Expanded(flex: 2, child: TableHeaderLabel(label: 'Idioma')),
+        Expanded(flex: 4, child: TableHeaderLabel(label: 'Link Type')),
+        Expanded(flex: 6, child: TableHeaderLabel(label: 'URL destino')),
+        Expanded(flex: 2, child: TableHeaderLabel(label: 'Más')),
       ],
     );
   }

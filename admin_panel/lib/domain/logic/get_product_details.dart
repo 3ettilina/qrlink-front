@@ -20,7 +20,7 @@ class GetProductDetails {
               .toList());
       return product;
     } catch (e) {
-      throw SomethingWentWrongException();
+      throw GetProductsGenericException();
     }
   }
 }

@@ -28,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           // LEFT PANE
           Container(
-            width: 250,
+            width: 220,
             color: AppColors.lile_1000,
             child: MenuPaneView(
               mainNavAction: _selectMenuOption,

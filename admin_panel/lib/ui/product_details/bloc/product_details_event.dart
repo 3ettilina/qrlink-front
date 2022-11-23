@@ -36,3 +36,16 @@ class ProductDetailsDeleteProductRequested extends ProductDetailsEvent {
   @override
   List<Object> get props => [gtin];
 }
+
+class ProductDetailsDeleteResourceRequested extends ProductDetailsEvent {
+  const ProductDetailsDeleteResourceRequested({
+    required this.gtin,
+    required this.resource,
+  });
+
+  final String gtin;
+  final Resource resource;
+
+  @override
+  List<Object> get props => [gtin, resource.name];
+}

@@ -16,7 +16,7 @@ class NotAbleToConvertToTypeException extends GetProductDetailsException {
             'No se ha podido mapear la respuesta con el modelo correspondiente.');
 }
 
-class SomethingWentWrongException extends GetProductDetailsException {
-  SomethingWentWrongException()
+class GetProductDetailsGenericException extends GetProductDetailsException {
+  GetProductDetailsGenericException()
       : super('Ha ocurrido un error al intentar obtener el producto.');
 }

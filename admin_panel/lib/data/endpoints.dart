@@ -16,4 +16,10 @@ class BackEndpoints {
 
   static Uri deleteProduct(String gtin) =>
       Uri.https(baseUrlDev, '/product/delete', {'gtin': gtin});
+
+  static Uri deleteResource(String gtin) =>
+      Uri.https(baseUrlDev, '/product/deleteResource', {'gtin': gtin});
+
+  static Uri editResource(String gtin) =>
+      Uri.https(baseUrlDev, '/product/editResource', {'gtin': gtin});
 }
