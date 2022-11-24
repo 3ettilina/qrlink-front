@@ -109,12 +109,12 @@ class ProductsService {
           language: null,
           resourceUrl: resourceUrl,
         ));
-      }
 
-      updateResourceRequest = RestServiceClient.patch(
-        uri: BackEndpoints.editResource(gtin),
-        data: entity,
-      );
+        updateResourceRequest = RestServiceClient.patch(
+          uri: BackEndpoints.editResource(gtin),
+          data: entity,
+        );
+      }
 
       if (isOnlyRedirect != null && resourceUrl == null) {
         final response = await updateOnlyRedirectRequest;
