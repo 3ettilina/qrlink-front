@@ -113,7 +113,7 @@ class ProductsService {
 
       updateResourceRequest = RestServiceClient.patch(
         uri: BackEndpoints.editResource(gtin),
-        data: resourceUrl,
+        data: entity,
       );
 
       if (isOnlyRedirect != null && resourceUrl == null) {

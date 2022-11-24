@@ -15,7 +15,7 @@ class EditResource {
         gtin: gtin,
         resourceName: resourceName,
         resourceLink: resourceLink,
-        resourceLanguage: resourceLanguage,
+        resourceLanguage: resourceLanguage ?? '',
         resourceUrl: resourceUrl,
       );
       return isResourceEdited;
