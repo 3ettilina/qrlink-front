@@ -1,12 +1,36 @@
+import 'package:admin_panel/ui/app/routes/main_router.gr.dart';
+import 'package:admin_panel/ui/app/widgets/input_text.dart';
+import 'package:auto_route/auto_route.dart';
+
 import '../../signup/view/signup_view.dart';
-import '../../home/view/home_view.dart';
 import 'package:auth_service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginView extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
+
+  @override
+  State<LoginView> createState() => _LoginView();
+}
+
+class _LoginView extends State<LoginView> {
+  String _email = '';
+  String _password = '';
+
+  void updateText({
+    String? email,
+    String? password,
+  }) {
+    setState(() {
+      if (email != null) {
+        _email = email;
+      }
+      if (password != null) {
+        _password = password;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,60 +43,36 @@ class LoginView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _LoginEmail(emailController: _emailController),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              child: InputText(
+                label: 'email',
+                hintText: 'email',
+                validatorMessage: 'Por favor ingresa email',
+                allowSpaces: false,
+                onChange: (value) => updateText(email: value),
+              ),
+            ),
             const SizedBox(height: 30.0),
-            _LoginPassword(passwordController: _passwordController),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              child: InputText(
+                label: 'password',
+                hintText: 'password',
+                validatorMessage: 'Por favor ingresa contraseña',
+                allowSpaces: false,
+                obscureText: true,
+                onChange: (value) => updateText(password: value),
+              ),
+            ),
             const SizedBox(height: 30.0),
             _SubmitButton(
-              email: _emailController.text,
-              password: _passwordController.text,
+              email: _email,
+              password: _password,
             ),
             const SizedBox(height: 30.0),
             _CreateAccountButton(),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LoginEmail extends StatelessWidget {
-  _LoginEmail({
-    Key? key,
-    required this.emailController,
-  }) : super(key: key);
-
-  final TextEditingController emailController;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: TextField(
-        controller: emailController,
-        decoration: const InputDecoration(hintText: 'Email'),
-      ),
-    );
-  }
-}
-
-class _LoginPassword extends StatelessWidget {
-  _LoginPassword({
-    Key? key,
-    required this.passwordController,
-  }) : super(key: key);
-
-  final TextEditingController passwordController;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: TextField(
-        controller: passwordController,
-        obscureText: true,
-        decoration: const InputDecoration(
-          hintText: 'Password',
         ),
       ),
     );
@@ -99,8 +99,7 @@ class _SubmitButton extends StatelessWidget {
             email: email,
             password: password,
           );
-          Navigator.of(context)
-              .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+          context.pushRoute(DashboardRoute());
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

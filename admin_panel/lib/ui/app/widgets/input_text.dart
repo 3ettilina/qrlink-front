@@ -11,6 +11,7 @@ class InputText extends StatelessWidget {
     required this.onChange,
     this.allowSpaces = true,
     Key? key,
+    this.obscureText = false,
   }) : super(key: key);
 
   final String label;
@@ -19,6 +20,7 @@ class InputText extends StatelessWidget {
   final String? validatorMessage;
   final Function(String?) onChange;
   final bool allowSpaces;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +40,18 @@ class InputText extends StatelessWidget {
           }
         },
         decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            labelText: label,
-            labelStyle: AppTextStyle.h4,
-            floatingLabelStyle: TextStyle(color: AppColors.lile_100),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.lile_100, width: 2)),
-            border: const OutlineInputBorder(),
-            hintText: hintText,
-            hintStyle: AppTextStyle.h4),
+          filled: true,
+          fillColor: Colors.white,
+          labelText: label,
+          labelStyle: AppTextStyle.h4,
+          floatingLabelStyle: TextStyle(color: AppColors.lile_100),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.lile_100, width: 2)),
+          border: const OutlineInputBorder(),
+          hintText: hintText,
+          hintStyle: AppTextStyle.h4,
+        ),
+        obscureText: this.obscureText,
       ),
     );
   }

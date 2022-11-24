@@ -15,7 +15,7 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
 
 import '../../add_product/add_product_page.dart' as _i5;
-import '../../auth/login_page.dart' as _i2;
+import '../../firebase_auth_ui/login/view/login_view.dart' as _i2;
 import '../../product_details/product_details_page.dart' as _i4;
 import '../../products_list/products_page.dart' as _i3;
 import '../app.dart' as _i1;
@@ -35,7 +35,7 @@ class MainRouter extends _i6.RootStackRouter {
     LoginRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.LoginPage(),
+        child: _i2.LoginView(),
       );
     },
     ProductsRoute.name: (routeData) {
