@@ -1,4 +1,5 @@
 import 'package:admin_panel/domain/models/models.dart';
+import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsHeader extends StatelessWidget {
@@ -19,9 +20,14 @@ class ProductDetailsHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // HEADER
-        Text('Nombre: ${defaultResource.name}'),
-        Text('GTIN: ${product.gtin}'),
-        Text('URL destino: ${defaultResource.resourceUrl}'),
+        Text('Nombre:', style: AppTextStyle.h2),
+        Text(defaultResource.name),
+        SizedBox(height: 5),
+        Text('GTIN:', style: AppTextStyle.h2),
+        Text(product.gtin),
+        SizedBox(height: 5),
+        Text('URL destino:', style: AppTextStyle.h2),
+        Text(defaultResource.resourceUrl),
       ],
     );
   }

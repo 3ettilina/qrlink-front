@@ -28,7 +28,7 @@ class CommonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: isEnabled ? onTap : null,
-      child: Center(child: _child()),
+      child: Container(alignment: Alignment.center, child: _child()),
     );
   }
 }
