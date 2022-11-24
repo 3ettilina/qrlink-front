@@ -106,7 +106,7 @@ class ProductsService {
         entity = ResourceEntity.toJson(ResourceEntity(
           name: name,
           linkType: 'gs1:defaultLink',
-          language: null,
+          language: '',
           resourceUrl: resourceUrl,
         ));
 
