@@ -4,9 +4,9 @@ import 'package:admin_panel/domain/repository/repository.dart';
 class EditProduct {
   static Future<bool> call({
     required String gtin,
-    bool isOnlyRedirect = false,
+    bool? isOnlyRedirect,
     required String resourceName,
-    required String resourceUrl,
+    String? resourceUrl,
   }) async {
     try {
       final isProductEdited = await Repository.productsRepository.editProduct(

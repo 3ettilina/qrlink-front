@@ -11,12 +11,12 @@ class EditProductEventRequest extends EditProductEvent {
   const EditProductEventRequest({
     required this.gtin,
     required this.name,
-    required this.resourceUrl,
-    this.isOnlyRedirect = false,
+    this.resourceUrl,
+    this.isOnlyRedirect,
   });
 
   final String gtin;
   final String name;
-  final bool isOnlyRedirect;
-  final String resourceUrl;
+  final bool? isOnlyRedirect;
+  final String? resourceUrl;
 }

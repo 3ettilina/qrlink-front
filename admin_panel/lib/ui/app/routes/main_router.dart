@@ -9,15 +9,20 @@ import 'package:auto_route/auto_route.dart';
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     AutoRoute(
-      path: '/',
+      path: 'login',
+      page: LoginView,
+      initial: true,
+    ),
+    AutoRoute(
+      path: 'dashboard',
       page: DashboardPage,
       children: [
-        RedirectRoute(path: '', redirectTo: 'products'),
+        RedirectRoute(path: 'dashboard', redirectTo: 'products'),
         CustomRoute(
           path: 'products',
           page: ProductsPage,
-          initial: true,
           maintainState: false,
+          initial: true,
         ),
         CustomRoute(
             path: 'products/:gtin',
@@ -26,7 +31,6 @@ import 'package:auto_route/auto_route.dart';
         CustomRoute(path: 'products/new', page: AddProductPage),
       ],
     ),
-    AutoRoute(path: '/login', page: LoginView)
   ],
 )
 class $MainRouter {}

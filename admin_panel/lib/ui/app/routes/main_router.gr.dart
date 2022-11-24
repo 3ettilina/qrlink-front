@@ -15,10 +15,10 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
 
 import '../../add_product/add_product_page.dart' as _i5;
-import '../../firebase_auth_ui/login/view/login_view.dart' as _i2;
+import '../../firebase_auth_ui/login/view/login_view.dart' as _i1;
 import '../../product_details/product_details_page.dart' as _i4;
 import '../../products_list/products_page.dart' as _i3;
-import '../app.dart' as _i1;
+import '../app.dart' as _i2;
 
 class MainRouter extends _i6.RootStackRouter {
   MainRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
@@ -26,16 +26,16 @@ class MainRouter extends _i6.RootStackRouter {
 
   @override
   final Map<String, _i6.PageFactory> pagesMap = {
+    LoginView.name: (routeData) {
+      return _i6.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i1.LoginView(),
+      );
+    },
     DashboardRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.DashboardPage(),
-      );
-    },
-    LoginRoute.name: (routeData) {
-      return _i6.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i2.LoginView(),
+        child: const _i2.DashboardPage(),
       );
     },
     ProductsRoute.name: (routeData) {
@@ -76,12 +76,29 @@ class MainRouter extends _i6.RootStackRouter {
   @override
   List<_i6.RouteConfig> get routes => [
         _i6.RouteConfig(
-          DashboardRoute.name,
+          '/#redirect',
           path: '/',
+          redirectTo: 'login',
+          fullMatch: true,
+        ),
+        _i6.RouteConfig(
+          LoginView.name,
+          path: 'login',
+        ),
+        _i6.RouteConfig(
+          DashboardRoute.name,
+          path: 'dashboard',
           children: [
             _i6.RouteConfig(
               '#redirect',
               path: '',
+              parent: DashboardRoute.name,
+              redirectTo: 'products',
+              fullMatch: true,
+            ),
+            _i6.RouteConfig(
+              'dashboard#redirect',
+              path: 'dashboard',
               parent: DashboardRoute.name,
               redirectTo: 'products',
               fullMatch: true,
@@ -103,36 +120,32 @@ class MainRouter extends _i6.RootStackRouter {
             ),
           ],
         ),
-        _i6.RouteConfig(
-          LoginRoute.name,
-          path: '/login',
-        ),
       ];
 }
 
 /// generated route for
-/// [_i1.DashboardPage]
+/// [_i1.LoginView]
+class LoginView extends _i6.PageRouteInfo<void> {
+  const LoginView()
+      : super(
+          LoginView.name,
+          path: 'login',
+        );
+
+  static const String name = 'LoginView';
+}
+
+/// generated route for
+/// [_i2.DashboardPage]
 class DashboardRoute extends _i6.PageRouteInfo<void> {
   const DashboardRoute({List<_i6.PageRouteInfo>? children})
       : super(
           DashboardRoute.name,
-          path: '/',
+          path: 'dashboard',
           initialChildren: children,
         );
 
   static const String name = 'DashboardRoute';
-}
-
-/// generated route for
-/// [_i2.LoginPage]
-class LoginRoute extends _i6.PageRouteInfo<void> {
-  const LoginRoute()
-      : super(
-          LoginRoute.name,
-          path: '/login',
-        );
-
-  static const String name = 'LoginRoute';
 }
 
 /// generated route for
