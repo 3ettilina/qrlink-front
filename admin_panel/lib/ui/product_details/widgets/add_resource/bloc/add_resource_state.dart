@@ -7,35 +7,44 @@ enum AddResourceStatus {
   addingResource,
   resourceAddedSuccessfully,
   resourceAlreadyExistsError,
+  editingProduct,
+  productEdited,
+  productEditError,
   error
 }
 
 class AddResourceState extends Equatable {
   const AddResourceState({
-    required this.status,
     required this.gtin,
+    required this.status,
     required this.linkTypes,
+    required this.languages,
     this.resource,
   });
 
+  final String gtin;
   final Resource? resource;
   final List<LinkType> linkTypes;
-  final String gtin;
+  final List<Language> languages;
   final AddResourceStatus status;
 
   AddResourceState copyWith({
+    String? newGtin,
     AddResourceStatus? newStatus,
     List<LinkType>? newLinkTypes,
+    List<Language>? newLanguages,
     Resource? newResource,
   }) {
     return AddResourceState(
+      gtin: newGtin ?? gtin,
       status: newStatus ?? status,
-      gtin: gtin,
       linkTypes: newLinkTypes ?? linkTypes,
+      languages: newLanguages ?? languages,
       resource: newResource ?? resource,
     );
   }
 
   @override
-  List<Object?> get props => [status, resource?.name, resource?.resourceUrl];
+  List<Object?> get props =>
+      [gtin, status, resource?.name, resource?.resourceUrl];
 }

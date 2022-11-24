@@ -13,6 +13,9 @@ class ResourcesListItemContent extends StatelessWidget {
 
   final Resource resource;
 
+  Widget _textWidget(String text) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6.0), child: Text(text));
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ProductDetailsBloc>();
@@ -20,10 +23,10 @@ class ResourcesListItemContent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Expanded(flex: 6, child: Text(resource.name)),
-        Expanded(flex: 2, child: Text(resource.language ?? '')),
-        Expanded(flex: 4, child: Text(resource.linkType ?? '')),
-        Expanded(flex: 6, child: Text(resource.resourceUrl)),
+        Expanded(flex: 6, child: _textWidget(resource.name)),
+        Expanded(flex: 2, child: _textWidget(resource.language ?? '')),
+        Expanded(flex: 4, child: _textWidget(resource.linkType ?? '')),
+        Expanded(flex: 6, child: _textWidget(resource.resourceUrl)),
         Expanded(
             flex: 2,
             child: CommonButton(

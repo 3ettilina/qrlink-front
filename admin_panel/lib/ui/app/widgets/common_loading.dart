@@ -6,6 +6,6 @@ class CommonLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator(color: AppColors.lile_600));
+    return Align(child: CircularProgressIndicator(color: AppColors.lile_600));
   }
 }

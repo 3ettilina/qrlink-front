@@ -13,7 +13,9 @@ class ProductsList extends StatelessWidget {
   Widget _productToWidget(Product p) => ProductListItemContent(product: p);
 
   void _onProductTap(BuildContext context, Product p) {
-    context.pushRoute(ProductDetailsRoute(gtin: p.gtin));
+    context.pushRoute(ProductDetailsRoute(
+      gtin: p.gtin,
+    ));
   }
 
   @override

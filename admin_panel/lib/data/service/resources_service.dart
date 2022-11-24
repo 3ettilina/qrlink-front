@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:admin_panel/data/endpoints.dart';
+import 'package:admin_panel/data/entity/language.dart';
 import 'package:admin_panel/data/entity/link_type_entity.dart';
 import 'package:admin_panel/data/entity/resource_entity.dart';
 import 'package:admin_panel/data/exceptions/delete_resource_exception.dart';
@@ -6,6 +9,7 @@ import 'package:admin_panel/data/exceptions/generic_exception.dart';
 import 'package:admin_panel/data/exceptions/get_product_resources_exception.dart';
 import 'package:admin_panel/data/service/client.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 
 class ResourceService {
   Future<bool> add(String gtin, Map<String, dynamic> resource) async {
@@ -66,6 +70,17 @@ class ResourceService {
         return LinkTypeEntity.toListFromJson(response.data);
       }
       throw GenericException();
+    } catch (e) {
+      throw GenericException();
+    }
+  }
+
+  Future<List<LanguageEntity>> getLanguages() async {
+    try {
+      final String langJson =
+          await rootBundle.loadString('assets/language.json');
+      final list = LanguageEntity.fromJsonToList(langJson);
+      return list;
     } catch (e) {
       throw GenericException();
     }

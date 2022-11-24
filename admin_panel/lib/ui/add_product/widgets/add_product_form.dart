@@ -76,6 +76,7 @@ class _AddFormState extends State<AddProductForm> {
                 label: 'Código GTIN',
                 hintText: 'Ej: 2637288989',
                 validatorMessage: 'Por favor ingresa un código para el GTIN',
+                allowSpaces: false,
                 onChange: (value) => updateText(gtin: value),
               ),
               const SizedBox(height: 20),

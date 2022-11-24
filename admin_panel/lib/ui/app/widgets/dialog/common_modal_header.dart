@@ -13,12 +13,9 @@ class CommonModalHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.topCenter,
-      child: Container(
-        color: AppColors.lile_600_15,
-        width: double.infinity,
+        alignment: Alignment.topCenter,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -37,8 +34,6 @@ class CommonModalHeader extends StatelessWidget {
               const SizedBox(height: 10.0),
             ]
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

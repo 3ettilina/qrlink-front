@@ -26,12 +26,12 @@ class RestServiceClient {
   }) {
     final optionsForRequest = options ??
         Options(
-          validateStatus: (status) => status == 200,
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        );
+            validateStatus: (status) => status == 200,
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            },
+            responseType: ResponseType.json);
     return _client.getUri(uri, options: optionsForRequest);
   }
 
