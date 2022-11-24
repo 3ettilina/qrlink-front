@@ -32,6 +32,7 @@ class ProductsRepository {
       return null;
     } on DioError catch (e) {
       if (e.response?.statusCode == 404) {
+        print(e);
         throw ProductNotFoundException(gtin);
       } else {
         throw SomethingWentWrongException(gtin);

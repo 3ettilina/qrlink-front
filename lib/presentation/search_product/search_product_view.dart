@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 import 'package:qrlink/domain/products_logic.dart';
 import 'package:qrlink/presentation/constants/constants.dart';
 
@@ -20,9 +20,9 @@ class SearchProductView extends StatelessWidget {
             width: 500,
             child: Column(
               children: [
-                LottieBuilder.asset(
-                  AppAssets.welcome,
-                ),
+                // LottieBuilder.asset(
+                //   AppAssets.welcome,
+                // ),
                 Text(
                   AppStrings.welcome,
                   style: AppTextStyle.header,
