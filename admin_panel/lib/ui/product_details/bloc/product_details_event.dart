@@ -26,14 +26,26 @@ class ProductDetailsAddResourceTap extends ProductDetailsEvent {
   List<Object> get props => [];
 }
 
-// TODO(betti): move this outside
 class ProductDetailsDeleteProductRequested extends ProductDetailsEvent {
   const ProductDetailsDeleteProductRequested({
-    required this.product,
+    required this.gtin,
   });
 
-  final Product product;
+  final String gtin;
 
   @override
-  List<Object> get props => [product.gtin];
+  List<Object> get props => [gtin];
+}
+
+class ProductDetailsDeleteResourceRequested extends ProductDetailsEvent {
+  const ProductDetailsDeleteResourceRequested({
+    required this.gtin,
+    required this.resource,
+  });
+
+  final String gtin;
+  final Resource resource;
+
+  @override
+  List<Object> get props => [gtin, resource.name];
 }

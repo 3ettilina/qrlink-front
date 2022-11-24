@@ -1,4 +1,6 @@
-import 'package:admin_panel/ui/add_resource/constants/strings.dart';
+import 'package:admin_panel/ui/app/widgets/common_loading.dart';
+import 'package:admin_panel/ui/app/widgets/custom_snackbar.dart';
+import 'package:admin_panel/ui/product_details/constants/strings.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/add_resource_form.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_bloc.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_state.dart';
@@ -10,33 +12,31 @@ class AddResourceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddResourceBloc, AddResourceState>(
-      listener: (context, state) {
-        switch (state.status) {
-          case AddResourceStatus.resourceAddedSuccessfully:
-            ScaffoldMessenger.of(context)
-              ..clearSnackBars()
-              ..showSnackBar(
-                SnackBar(
-                    backgroundColor: Colors.greenAccent.withOpacity(0.85),
-                    content: const Text(
-                        AddResourceStrings.resourceAddedSuccesfully)),
-              );
-            break;
-          case AddResourceStatus.resourceAlreadyExistsError:
-            ScaffoldMessenger.of(context)
-              ..clearSnackBars()
-              ..showSnackBar(
-                SnackBar(
-                    backgroundColor: Colors.red.withOpacity(0.85),
-                    content:
-                        const Text(AddResourceStrings.resourceAlreadyExists)),
-              );
-            break;
-          default:
-        }
-      },
-      child: const AddResourceForm(),
-    );
+    return BlocConsumer<AddResourceBloc, AddResourceState>(
+        listener: (context, state) {
+      switch (state.status) {
+        case AddResourceStatus.resourceAddedSuccessfully:
+          showCommonSnackbar(
+            context,
+            message: ProductDetailsStrings.resourceAddedSuccesfully,
+            type: SnackbarType.success,
+          );
+          Navigator.pop(context, true);
+          break;
+        case AddResourceStatus.resourceAlreadyExistsError:
+          showCommonSnackbar(
+            context,
+            message: ProductDetailsStrings.resourceAlreadyExists,
+            type: SnackbarType.failure,
+          );
+          break;
+        default:
+      }
+    }, builder: (context, state) {
+      if (state.status == AddResourceStatus.ready) {
+        return const AddResourceForm();
+      }
+      return const CommonLoader();
+    });
   }
 }

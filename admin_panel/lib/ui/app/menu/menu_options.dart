@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 enum MenuOptions {
   productsList(
       AppStrings.products, Icons.shopping_bag_outlined, ProductsRoute()),
-  addProduct(
-      AppStrings.addProduct, Icons.local_shipping_outlined, AddProductRoute());
+  addProduct(AppStrings.addProduct, Icons.add_rounded, AddProductRoute());
 
   const MenuOptions(this.label, this.icon, this.route);
 

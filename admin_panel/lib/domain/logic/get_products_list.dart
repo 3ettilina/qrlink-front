@@ -21,7 +21,7 @@ class GetProductsList {
           .toList();
       return products;
     } catch (e) {
-      throw SomethingWentWrongException();
+      throw GetProductsGenericException();
     }
   }
 }

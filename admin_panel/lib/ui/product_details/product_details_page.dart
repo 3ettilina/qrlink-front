@@ -1,8 +1,9 @@
-import 'package:admin_panel/ui/add_resource/constants/strings.dart';
 import 'package:admin_panel/ui/app/widgets/custom_snackbar.dart';
 import 'package:admin_panel/ui/app/widgets/section_title.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_bloc.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_event.dart';
+import 'package:admin_panel/ui/product_details/bloc/product_details_state.dart';
+import 'package:admin_panel/ui/product_details/constants/strings.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_bloc.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_state.dart';
 import 'package:admin_panel/ui/product_details/widgets/product_details_view.dart';
@@ -27,37 +28,51 @@ class ProductDetailsPage extends StatelessWidget {
               ..add(ProductDetailsProductSelected(gtin: gtin))),
         BlocProvider(create: (context) => AddResourceBloc(gtin))
       ],
-      child: BlocListener<AddResourceBloc, AddResourceState>(
+      child: BlocListener<ProductDetailsBloc, ProductDetailsState>(
         listener: (context, state) {
-          final productBloc = context.read<ProductDetailsBloc>();
-          if (state.status == AddResourceStatus.loading) {
+          if (state.status == ProductDetailsStatus.resourceDeleted) {
             showCommonSnackbar(
               context,
-              message: AddResourceStrings.addingResource,
-              type: SnackbarType.info,
-            );
-          }
-          if (state.status == AddResourceStatus.resourceAddedSuccessfully) {
-            productBloc.add(ProductDetailsProductSelected(gtin: gtin));
-            showCommonSnackbar(
-              context,
-              message: AddResourceStrings.resourceAddedSuccesfully,
+              message: ProductDetailsStrings.resourceHasBeenDeleted,
               type: SnackbarType.success,
             );
-          }
-          if (state.status == AddResourceStatus.resourceAlreadyExistsError) {
-            showCommonSnackbar(
-              context,
-              message: AddResourceStrings.resourceAlreadyExists,
-              type: SnackbarType.failure,
-            );
+            context
+                .read<ProductDetailsBloc>()
+                .add(ProductDetailsProductSelected(gtin: gtin));
           }
         },
-        child: Column(
-          children: const [
-            SectionTitle(label: 'Detalle de producto'),
-            Expanded(child: ProductDetailsView()),
-          ],
+        child: BlocListener<AddResourceBloc, AddResourceState>(
+          listener: (context, state) {
+            final productBloc = context.read<ProductDetailsBloc>();
+            if (state.status == AddResourceStatus.addingResource) {
+              showCommonSnackbar(
+                context,
+                message: ProductDetailsStrings.addingResource,
+                type: SnackbarType.info,
+              );
+            }
+            if (state.status == AddResourceStatus.resourceAddedSuccessfully) {
+              productBloc.add(ProductDetailsProductSelected(gtin: gtin));
+              showCommonSnackbar(
+                context,
+                message: ProductDetailsStrings.resourceAddedSuccesfully,
+                type: SnackbarType.success,
+              );
+            }
+            if (state.status == AddResourceStatus.resourceAlreadyExistsError) {
+              showCommonSnackbar(
+                context,
+                message: ProductDetailsStrings.resourceAlreadyExists,
+                type: SnackbarType.failure,
+              );
+            }
+          },
+          child: Column(
+            children: const [
+              SectionTitle(label: 'Detalle de producto'),
+              Expanded(child: ProductDetailsView()),
+            ],
+          ),
         ),
       ),
     );

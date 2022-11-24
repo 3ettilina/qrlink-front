@@ -1,7 +1,7 @@
 import 'package:admin_panel/domain/logic/add_product.dart';
 import 'package:admin_panel/domain/result/add_product_result.dart';
-import 'package:admin_panel/ui/add_resource/constants/strings.dart';
-import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
+import 'package:admin_panel/ui/add_product/constants/strings.dart';
+import 'package:admin_panel/ui/app/widgets/input_text.dart';
 import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:admin_panel/ui/app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +34,7 @@ class _AddFormState extends State<AddProductForm> {
       if (name != null) {
         _name = name;
       }
-      if (onlyRedirect != false) {
-        _onlyRedirect = onlyRedirect;
-      }
+      _onlyRedirect = onlyRedirect;
       if (resourceUrl != null) {
         _resourceUrl = resourceUrl;
       }
@@ -78,6 +76,7 @@ class _AddFormState extends State<AddProductForm> {
                 label: 'Código GTIN',
                 hintText: 'Ej: 2637288989',
                 validatorMessage: 'Por favor ingresa un código para el GTIN',
+                allowSpaces: false,
                 onChange: (value) => updateText(gtin: value),
               ),
               const SizedBox(height: 20),
@@ -103,7 +102,7 @@ class _AddFormState extends State<AddProductForm> {
 
                     showCommonSnackbar(
                       context,
-                      message: AddResourceStrings.addingResource,
+                      message: AddProductStrings.addingProduct,
                     );
 
                     final result = await AddProduct.call(
@@ -118,7 +117,7 @@ class _AddFormState extends State<AddProductForm> {
                       case AddProductResultType.success:
                         showCommonSnackbar(
                           context,
-                          message: AddResourceStrings.resourceAddedSuccesfully,
+                          message: AddProductStrings.productAddedSuccessfuly,
                           type: SnackbarType.success,
                         );
                         _formKey.currentState?.reset();
@@ -149,7 +148,7 @@ class _AddFormState extends State<AddProductForm> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      AddResourceStrings.addProduct,
+                      AddProductStrings.addProduct,
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     )
                   ],

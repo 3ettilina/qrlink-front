@@ -1,5 +1,4 @@
 import 'package:admin_panel/data/exceptions/get_product_resources_exception.dart';
-import 'package:admin_panel/data/repository/products_repository.dart';
 import 'package:admin_panel/domain/repository/repository.dart';
 import 'package:admin_panel/domain/result/add_product_result.dart';
 

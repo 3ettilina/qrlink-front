@@ -12,7 +12,7 @@ class AddResourceToProduct {
   }) async {
     try {
       final isResourseAdded =
-          await Repository.productsRepository.addResourceToProduct(
+          await Repository.resourcesRepository.addResourceToProduct(
         gtin: gtin,
         resourceName: resourceName,
         resourceLinkType: resourceLinkType,

@@ -1,4 +1,7 @@
-import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
+import 'package:admin_panel/domain/models/language.dart';
+import 'package:admin_panel/domain/models/link_type.dart';
+import 'package:admin_panel/ui/app/widgets/dropdown.dart';
+import 'package:admin_panel/ui/app/widgets/input_text.dart';
 import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:admin_panel/ui/app/widgets/common_button.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_bloc.dart';
@@ -18,15 +21,15 @@ class _AddResourceFormState extends State<AddResourceForm> {
   final _formKey = GlobalKey<FormState>();
 
   String? name;
-  String? linkType;
-  String? language;
+  LinkType? linkType;
+  Language? language;
   String? resourceUrl;
   bool isSubmitEnabled = false;
 
   void updateText({
     String? newName,
-    String? newLinkType,
-    String? newLanguage,
+    LinkType? newLinkType,
+    Language? newLanguage,
     String? newResourceUrl,
   }) {
     setState(() {
@@ -41,68 +44,71 @@ class _AddResourceFormState extends State<AddResourceForm> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<AddResourceBloc>();
-    final state = bloc.state;
-    return BlocListener<AddResourceBloc, AddResourceState>(
-      listener: (context, state) {
-        if (state.status == AddResourceStatus.resourceAddedSuccessfully) {
-          _formKey.currentState?.reset();
-        }
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        height: 85,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              child: Text(
-                'Nuevo recurso',
-                style: AppTextStyle.h2,
-              ),
-            ),
-            Expanded(
-              child: Form(
-                key: _formKey,
-                child: FocusTraversalGroup(
-                  policy: OrderedTraversalPolicy(),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: InputText(
+    return BlocConsumer<AddResourceBloc, AddResourceState>(
+        listener: (context, state) {
+      if (state.status == AddResourceStatus.resourceAddedSuccessfully) {
+        _formKey.currentState?.reset();
+      }
+    }, builder: (context, state) {
+      final bloc = context.read<AddResourceBloc>();
+      return Card(
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Form(
+                  key: _formKey,
+                  child: FocusTraversalGroup(
+                    policy: OrderedTraversalPolicy(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        InputText(
                           label: 'Nombre del recurso',
                           hintText: 'Ej: Receta',
                           validatorMessage:
                               'Por favor ingresa un nombre para el recurso',
                           onChange: (value) => updateText(newName: value),
                         ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        flex: 2,
-                        child: InputText(
-                          label: 'Tipo de link',
-                          hintText: 'Ej: gs1:recipeInfo',
-                          validatorMessage: 'Por favor ingresa un tipo de link',
-                          onChange: (value) => updateText(newLinkType: value),
+                        SizedBox(height: 5),
+                        SizedBox(
+                          height: 40,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: DropDown<Language>(
+                                label: 'Idioma del recurso',
+                                items: state.languages,
+                                itemContent: (lang) => Text(
+                                  '${lang.name} (${lang.code})',
+                                  style: AppTextStyle.h2
+                                      .copyWith(color: AppColors.lile_600),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                onSelected: (value) =>
+                                    updateText(newLanguage: value),
+                              )),
+                              const SizedBox(width: 5),
+                              Expanded(
+                                  flex: 2,
+                                  child: DropDown<LinkType>(
+                                    label: 'Seleccionar link-type',
+                                    items: state.linkTypes,
+                                    itemContent: (linkType) => Text(
+                                      '${linkType.name} (${linkType.id})',
+                                      style: AppTextStyle.h2
+                                          .copyWith(color: AppColors.lile_600),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    onSelected: (value) =>
+                                        updateText(newLinkType: value),
+                                  )),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        flex: 2,
-                        child: InputText(
-                            label: 'Idioma del recurso',
-                            hintText: 'Ej: en',
-                            onChange: (value) =>
-                                updateText(newLanguage: value)),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        flex: 2,
-                        child: InputText(
+                        const SizedBox(height: 7),
+                        InputText(
                           label: 'URL del recurso',
                           hintText:
                               'Ej: https://www.wildfooduk.com/mushroom-guide/',
@@ -110,34 +116,34 @@ class _AddResourceFormState extends State<AddResourceForm> {
                           onChange: (value) =>
                               updateText(newResourceUrl: value),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                          child: CommonButton(
-                              isEnabled: isSubmitEnabled,
-                              onTap: () {
-                                if (_formKey.currentState!.validate()) {
-                                  bloc.add(AddResourceEventRequest(
-                                    gtin: state.gtin,
-                                    name: name!,
-                                    resourceUrl: resourceUrl!,
-                                    language: language,
-                                    linkType: linkType,
-                                  ));
-                                }
-                              },
-                              content:
-                                  Center(child: Icon(Icons.add, size: 25)))),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+                SizedBox(height: 7),
+                Row(
+                  children: [
+                    CommonButton(
+                        onTap: () => Navigator.pop(context, false),
+                        label: 'Cancelar'),
+                    Spacer(),
+                    CommonButton(
+                        isEnabled: isSubmitEnabled,
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            bloc.add(AddResourceEventRequest(
+                              gtin: state.gtin,
+                              name: name!,
+                              resourceUrl: resourceUrl!,
+                              language: language?.code,
+                              linkType: linkType?.id,
+                            ));
+                          }
+                        },
+                        label: 'Agregar'),
+                  ],
+                )
+              ]));
+    });
   }
 }
