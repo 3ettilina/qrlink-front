@@ -119,8 +119,11 @@ class _EditProductFormState extends State<EditProductForm> {
                               bloc.add(EditProductEventRequest(
                                 gtin: state.product.gtin,
                                 name: name!,
-                                resourceUrl: url!,
-                                isOnlyRedirect: redirect ?? false,
+                                resourceUrl:
+                                    url == widget.resourceUrl ? null : url,
+                                isOnlyRedirect: redirect == widget.onlyRedirect
+                                    ? null
+                                    : redirect,
                               ));
                             }
                           },

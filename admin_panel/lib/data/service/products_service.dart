@@ -86,36 +86,52 @@ class ProductsService {
 
   Future<bool> editProductDetails({
     required String gtin,
-    required bool isOnlyRedirect,
     required String name,
-    required String resourceUrl,
+    bool? isOnlyRedirect,
+    String? resourceUrl,
   }) async {
+    assert(isOnlyRedirect != null || resourceUrl != null);
     try {
+      late Future<Response> updateOnlyRedirectRequest;
+      late Future<Response> updateResourceRequest;
+      late Map<String, dynamic> entity;
+
       // UPDATE ONLY-REDIRECT
-      final updateOnlyRedirectRequest = RestServiceClient.post(
+      updateOnlyRedirectRequest = RestServiceClient.post(
           uri: BackEndpoints.setOnlyRedirect(gtin),
           data: {"only_redirect": isOnlyRedirect});
 
-      // UPDATE RESOURCE
-      final updateResourceData = ResourceEntity.toJson(
-        ResourceEntity(
+      if (resourceUrl != null) {
+        // UPDATE RESOURCE
+        entity = ResourceEntity.toJson(ResourceEntity(
           name: name,
           linkType: 'gs1:defaultLink',
           language: null,
           resourceUrl: resourceUrl,
-        ),
-      );
-      final updateResourceRequest = RestServiceClient.patch(
+        ));
+      }
+
+      updateResourceRequest = RestServiceClient.patch(
         uri: BackEndpoints.editResource(gtin),
-        data: updateResourceData,
+        data: resourceUrl,
       );
 
-      final result = await Future.wait([
-        updateOnlyRedirectRequest,
-        updateResourceRequest,
-      ]);
+      if (isOnlyRedirect != null && resourceUrl == null) {
+        final response = await updateOnlyRedirectRequest;
+        return response.statusCode == 200;
+      }
+      if (resourceUrl != null && isOnlyRedirect == null) {
+        final response = await updateResourceRequest;
+        return response.statusCode == 200;
+      }
+      if (resourceUrl != null && isOnlyRedirect != null) {
+        final resourceResponse = await updateResourceRequest;
+        final redirectResponse = await updateOnlyRedirectRequest;
 
-      return (result.first.statusCode == 200 && result.last.statusCode == 200);
+        return resourceResponse.statusCode == 200 &&
+            redirectResponse.statusCode == 200;
+      }
+      throw GenericException();
     } on DioError catch (_) {
       throw GenericException();
     } catch (e) {

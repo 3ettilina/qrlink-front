@@ -41,9 +41,9 @@ class ProductsRepository {
 
   Future<bool> editProduct(
       {required String gtin,
-      bool isOnlyRedirect = false,
+      bool? isOnlyRedirect,
       required String name,
-      required String resourceUrl}) async {
+      String? resourceUrl}) async {
     final result = await _productsService.editProductDetails(
       gtin: gtin,
       isOnlyRedirect: isOnlyRedirect,

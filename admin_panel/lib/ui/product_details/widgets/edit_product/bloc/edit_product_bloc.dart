@@ -25,6 +25,7 @@ class EditProductBloc extends Bloc<EditProductEvent, EditProductState> {
       final result = await EditProduct.call(
           gtin: event.gtin,
           resourceName: event.name,
+          isOnlyRedirect: event.isOnlyRedirect,
           resourceUrl: event.resourceUrl);
 
       if (result) {

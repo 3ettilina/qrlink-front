@@ -25,6 +25,11 @@ class EditProductView extends StatelessWidget {
             );
             Navigator.pop(context, true);
             break;
+          case EditProductStatus.error:
+            showCommonSnackbar(context,
+                message: 'Ocurrió un problema al editar el producto',
+                type: SnackbarType.failure);
+            break;
           default:
         }
       },
