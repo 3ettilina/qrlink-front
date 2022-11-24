@@ -1,13 +1,14 @@
 import 'package:admin_panel/domain/models/models.dart';
 import 'package:admin_panel/ui/app/constants/colors.dart';
-import 'package:admin_panel/ui/app/routes/main_router.gr.dart';
 import 'package:admin_panel/ui/app/widgets/common_button.dart';
 import 'package:admin_panel/ui/app/widgets/common_divider.dart';
 import 'package:admin_panel/ui/app/widgets/custom_snackbar.dart';
+import 'package:admin_panel/ui/app/widgets/dialog/common_modal.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_bloc.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_event.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_state.dart';
-import 'package:admin_panel/ui/product_details/widgets/add_resource/add_resource_form.dart';
+import 'package:admin_panel/ui/product_details/widgets/add_resource/add_resource_view.dart';
+import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_bloc.dart';
 import 'package:admin_panel/ui/product_details/widgets/main_content/product_details_header.dart';
 import 'package:admin_panel/ui/product_details/widgets/resources_list/resources_list_content.dart';
 import 'package:auto_route/auto_route.dart';
@@ -64,7 +65,17 @@ class ProductDetailsContent extends StatelessWidget {
                     child: ResourcesListContent(resources: resourceListToShow)),
 
               const SizedBox(height: 5),
-              const AddResourceForm(),
+              CommonButton(
+                  label: 'Agregar recurso',
+                  onTap: () {
+                    showCommonDialog(context,
+                        title: 'Agregar recurso',
+                        content: BlocProvider(
+                          create: (context) =>
+                              AddResourceBloc(bloc.state.gtin!),
+                          child: const AddResourceView(),
+                        ));
+                  }),
               const SizedBox(height: 20),
 
               const CommonDivider(),

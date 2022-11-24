@@ -5,6 +5,7 @@ import 'package:admin_panel/ui/product_details/bloc/product_details_event.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_state.dart';
 import 'package:admin_panel/ui/product_details/constants/strings.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_bloc.dart';
+import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_event.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_state.dart';
 import 'package:admin_panel/ui/product_details/widgets/product_details_view.dart';
 import 'package:auto_route/auto_route.dart';
@@ -26,7 +27,9 @@ class ProductDetailsPage extends StatelessWidget {
         BlocProvider(
             create: (context) => ProductDetailsBloc()
               ..add(ProductDetailsProductSelected(gtin: gtin))),
-        BlocProvider(create: (context) => AddResourceBloc(gtin))
+        BlocProvider(
+            create: (context) => AddResourceBloc(gtin)
+              ..add(const AddResourceEventFetchLinkTypes()))
       ],
       child: BlocListener<ProductDetailsBloc, ProductDetailsState>(
         listener: (context, state) {
@@ -44,7 +47,7 @@ class ProductDetailsPage extends StatelessWidget {
         child: BlocListener<AddResourceBloc, AddResourceState>(
           listener: (context, state) {
             final productBloc = context.read<ProductDetailsBloc>();
-            if (state.status == AddResourceStatus.loading) {
+            if (state.status == AddResourceStatus.addingResource) {
               showCommonSnackbar(
                 context,
                 message: ProductDetailsStrings.addingResource,

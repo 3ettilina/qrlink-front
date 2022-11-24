@@ -34,9 +34,7 @@ class _AddFormState extends State<AddProductForm> {
       if (name != null) {
         _name = name;
       }
-      if (onlyRedirect != false) {
-        _onlyRedirect = onlyRedirect;
-      }
+      _onlyRedirect = onlyRedirect;
       if (resourceUrl != null) {
         _resourceUrl = resourceUrl;
       }

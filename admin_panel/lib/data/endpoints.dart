@@ -9,6 +9,8 @@ class BackEndpoints {
 
   static Uri addProduct() => Uri.https(baseUrlDev, '/product/addProduct');
 
+  static Uri getLinkTypes() => Uri.https(baseUrlDev, '/admin/getLinkTypeList');
+
   static Uri getProducts() => Uri.https(baseUrlDev, '/product/getProducts');
 
   static Uri getProductDetails(String gtin) =>

@@ -32,6 +32,8 @@ dependencies:
   auto_route: ^5.0.2
   flutter_web_plugins:
     sdk: flutter
+  adaptive_dialog: ^1.8.0+1
+  dropdown_button2: ^1.9.1
 
 dev_dependencies:
   flutter_test:

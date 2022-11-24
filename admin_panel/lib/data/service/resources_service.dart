@@ -1,6 +1,8 @@
 import 'package:admin_panel/data/endpoints.dart';
+import 'package:admin_panel/data/entity/link_type_entity.dart';
 import 'package:admin_panel/data/entity/resource_entity.dart';
 import 'package:admin_panel/data/exceptions/delete_resource_exception.dart';
+import 'package:admin_panel/data/exceptions/generic_exception.dart';
 import 'package:admin_panel/data/exceptions/get_product_resources_exception.dart';
 import 'package:admin_panel/data/service/client.dart';
 import 'package:dio/dio.dart';
@@ -52,6 +54,20 @@ class ResourceService {
       throw DeleteResourceGenericException();
     } catch (e) {
       throw DeleteResourceGenericException();
+    }
+  }
+
+  Future<List<LinkTypeEntity>> getLinkTypeList() async {
+    try {
+      final response =
+          await RestServiceClient.get(uri: BackEndpoints.getLinkTypes());
+
+      if (response.statusCode == 200) {
+        return LinkTypeEntity.toListFromJson(response.data);
+      }
+      throw GenericException();
+    } catch (e) {
+      throw GenericException();
     }
   }
 }

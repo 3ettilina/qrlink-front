@@ -17,26 +17,29 @@ class InputText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      onChanged: onChange,
-      validator: (value) {
-        if (validatorMessage != null && (value == null || value.isEmpty)) {
-          return validatorMessage;
-        } else {
-          return null;
-        }
-      },
-      decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          labelText: label,
-          labelStyle: AppTextStyle.h4,
-          floatingLabelStyle: TextStyle(color: AppColors.lile_100),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.lile_100, width: 2)),
-          border: const OutlineInputBorder(),
-          hintText: hintText,
-          hintStyle: AppTextStyle.h4),
+    return SizedBox(
+      height: 40,
+      child: TextFormField(
+        onChanged: onChange,
+        validator: (value) {
+          if (validatorMessage != null && (value == null || value.isEmpty)) {
+            return validatorMessage;
+          } else {
+            return null;
+          }
+        },
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            labelText: label,
+            labelStyle: AppTextStyle.h4,
+            floatingLabelStyle: TextStyle(color: AppColors.lile_100),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.lile_100, width: 2)),
+            border: const OutlineInputBorder(),
+            hintText: hintText,
+            hintStyle: AppTextStyle.h4),
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
+import 'package:admin_panel/data/entity/link_type_entity.dart';
 import 'package:admin_panel/data/entity/resource_entity.dart';
-import 'package:admin_panel/data/service/resource_service.dart';
+import 'package:admin_panel/data/service/resources_service.dart';
 
 class ResourcesRepository {
   ResourcesRepository({
@@ -56,6 +57,11 @@ class ResourcesRepository {
         language: resourceLanguage,
         resourceUrl: resourceUrl);
     final result = await _resourceService.delete(gtin, resource);
+    return result;
+  }
+
+  Future<List<LinkTypeEntity>> getLinkTypeList() async {
+    final result = await _resourceService.getLinkTypeList();
     return result;
   }
 }

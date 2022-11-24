@@ -7,6 +7,10 @@ abstract class AddResourceEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class AddResourceEventFetchLinkTypes extends AddResourceEvent {
+  const AddResourceEventFetchLinkTypes();
+}
+
 class AddResourceEventRequest extends AddResourceEvent {
   const AddResourceEventRequest({
     required this.gtin,
