@@ -38,4 +38,18 @@ class ProductsRepository {
     final result = await _productsService.delete(gtin);
     return result;
   }
+
+  Future<bool> editProduct(
+      {required String gtin,
+      bool isOnlyRedirect = false,
+      required String name,
+      required String resourceUrl}) async {
+    final result = await _productsService.editProductDetails(
+      gtin: gtin,
+      isOnlyRedirect: isOnlyRedirect,
+      name: name,
+      resourceUrl: resourceUrl,
+    );
+    return result;
+  }
 }

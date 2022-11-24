@@ -7,8 +7,8 @@ abstract class AddResourceEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddResourceEventFetchLinkTypes extends AddResourceEvent {
-  const AddResourceEventFetchLinkTypes();
+class AddResourceEventFetchData extends AddResourceEvent {
+  const AddResourceEventFetchData();
 }
 
 class AddResourceEventRequest extends AddResourceEvent {
@@ -27,20 +27,14 @@ class AddResourceEventRequest extends AddResourceEvent {
   final String resourceUrl;
 }
 
-class AddResourceEventSuccessful extends AddResourceEvent {
-  const AddResourceEventSuccessful({
-    required this.name,
-  });
-
-  final String name;
-}
-
-class AddResourceEventAlreadyExists extends AddResourceEvent {
-  const AddResourceEventAlreadyExists({
+class EditProductEventEditProductRequest extends AddResourceEvent {
+  const EditProductEventEditProductRequest({
     required this.gtin,
     required this.name,
+    required this.resourceUrl,
   });
 
   final String gtin;
   final String name;
+  final String resourceUrl;
 }

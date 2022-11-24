@@ -1,4 +1,5 @@
 import 'package:admin_panel/data/endpoints.dart';
+import 'package:admin_panel/data/entity/language.dart';
 import 'package:admin_panel/data/entity/link_type_entity.dart';
 import 'package:admin_panel/data/entity/resource_entity.dart';
 import 'package:admin_panel/data/exceptions/delete_resource_exception.dart';
@@ -64,6 +65,20 @@ class ResourceService {
 
       if (response.statusCode == 200) {
         return LinkTypeEntity.toListFromJson(response.data);
+      }
+      throw GenericException();
+    } catch (e) {
+      throw GenericException();
+    }
+  }
+
+  Future<List<LanguageEntity>> getLanguages() async {
+    try {
+      final response =
+          await RestServiceClient.get(uri: BackEndpoints.getLanguages());
+
+      if (response.statusCode == 200) {
+        return LanguageEntity.fromJsonToList(response.data);
       }
       throw GenericException();
     } catch (e) {

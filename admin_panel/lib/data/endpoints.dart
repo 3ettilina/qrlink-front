@@ -1,5 +1,9 @@
 class BackEndpoints {
   static String baseUrlDev = 'qrlink-dev.rj.r.appspot.com';
+  static String languagesBaseUrl = 'localeplanet.com';
+
+  static Uri getLanguages() =>
+      Uri.https(languagesBaseUrl, '/api/auto/langmap.json');
 
   static Uri getProductResources(String gtin) =>
       Uri.https(baseUrlDev, '/getProductResources', {'gtin': gtin});
@@ -24,4 +28,9 @@ class BackEndpoints {
 
   static Uri editResource(String gtin) =>
       Uri.https(baseUrlDev, '/product/editResource', {'gtin': gtin});
+
+  static Uri setOnlyRedirect(
+    String gtin,
+  ) =>
+      Uri.https(baseUrlDev, '/product/setOnlyRedirect', {'gtin': gtin});
 }

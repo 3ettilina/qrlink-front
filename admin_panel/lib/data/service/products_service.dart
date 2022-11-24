@@ -1,6 +1,8 @@
 import 'package:admin_panel/data/endpoints.dart';
+import 'package:admin_panel/data/entity/resource_entity.dart';
 import 'package:admin_panel/data/exceptions/add_product_exception.dart';
 import 'package:admin_panel/data/exceptions/delete_product_exception.dart';
+import 'package:admin_panel/data/exceptions/generic_exception.dart';
 import 'package:admin_panel/data/exceptions/get_product_details_exception.dart';
 import 'package:admin_panel/data/exceptions/get_products_exception.dart';
 import 'package:admin_panel/data/service/client.dart';
@@ -79,6 +81,45 @@ class ProductsService {
       throw DeleteProductGenericException();
     } catch (e) {
       throw DeleteProductGenericException();
+    }
+  }
+
+  Future<bool> editProductDetails({
+    required String gtin,
+    required bool isOnlyRedirect,
+    required String name,
+    required String resourceUrl,
+  }) async {
+    try {
+      // UPDATE ONLY-REDIRECT
+      final updateOnlyRedirectRequest = RestServiceClient.post(
+          uri: BackEndpoints.setOnlyRedirect(gtin),
+          data: {"only_redirect": isOnlyRedirect});
+
+      // UPDATE RESOURCE
+      final updateResourceData = ResourceEntity.toJson(
+        ResourceEntity(
+          name: name,
+          linkType: 'gs1:defaultLink',
+          language: null,
+          resourceUrl: resourceUrl,
+        ),
+      );
+      final updateResourceRequest = RestServiceClient.patch(
+        uri: BackEndpoints.editResource(gtin),
+        data: updateResourceData,
+      );
+
+      final result = await Future.wait([
+        updateOnlyRedirectRequest,
+        updateResourceRequest,
+      ]);
+
+      return (result.first.statusCode == 200 && result.last.statusCode == 200);
+    } on DioError catch (_) {
+      throw GenericException();
+    } catch (e) {
+      throw GenericException();
     }
   }
 }

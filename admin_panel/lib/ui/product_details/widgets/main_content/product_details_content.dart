@@ -9,6 +9,7 @@ import 'package:admin_panel/ui/product_details/bloc/product_details_event.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_state.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/add_resource_view.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_bloc.dart';
+import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_event.dart';
 import 'package:admin_panel/ui/product_details/widgets/main_content/product_details_header.dart';
 import 'package:admin_panel/ui/product_details/widgets/resources_list/resources_list_content.dart';
 import 'package:auto_route/auto_route.dart';
@@ -25,6 +26,7 @@ class ProductDetailsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final resourceListToShow = product.resources.sublist(1);
     final bloc = context.read<ProductDetailsBloc>();
+    final state = bloc.state;
     return BlocListener<ProductDetailsBloc, ProductDetailsState>(
       listener: (context, state) {
         if (state.status == ProductDetailsStatus.productDeleted) {
@@ -67,14 +69,18 @@ class ProductDetailsContent extends StatelessWidget {
               const SizedBox(height: 5),
               CommonButton(
                   label: 'Agregar recurso',
-                  onTap: () {
-                    showCommonDialog(context,
+                  onTap: () async {
+                    final result = await showCommonDialog(context,
                         title: 'Agregar recurso',
                         content: BlocProvider(
-                          create: (context) =>
-                              AddResourceBloc(bloc.state.gtin!),
+                          create: (context) => AddResourceBloc(bloc.state.gtin!)
+                            ..add(const AddResourceEventFetchData()),
                           child: const AddResourceView(),
                         ));
+                    if (result) {
+                      bloc.add(
+                          ProductDetailsProductSelected(gtin: state.gtin!));
+                    }
                   }),
               const SizedBox(height: 20),
 
