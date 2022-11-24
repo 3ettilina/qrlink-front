@@ -119,22 +119,11 @@ class _EditProductFormState extends State<EditProductForm> {
                               bloc.add(EditProductEventRequest(
                                 gtin: state.product.gtin,
                                 name: name!,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> eb27f0f ([TASK-99] Corregir edición de producto)
                                 resourceUrl:
                                     url == widget.resourceUrl ? null : url,
                                 isOnlyRedirect: redirect == widget.onlyRedirect
                                     ? null
                                     : redirect,
-<<<<<<< HEAD
-=======
-                                resourceUrl: url!,
-                                isOnlyRedirect: redirect ?? false,
->>>>>>> 7825607 ([TASK-99] Agregar Switch onlyRedirect - + Mejoras)
-=======
->>>>>>> eb27f0f ([TASK-99] Corregir edición de producto)
                               ));
                             }
                           },
