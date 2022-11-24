@@ -1,6 +1,6 @@
 import 'package:admin_panel/ui/add_product/add_product_page.dart';
 import 'package:admin_panel/ui/app/app.dart';
-import 'package:admin_panel/ui/auth/login_page.dart';
+import 'package:admin_panel/ui/firebase_auth_ui/login/view/login_view.dart';
 import 'package:admin_panel/ui/product_details/product_details_page.dart';
 import 'package:admin_panel/ui/products_list/products_page.dart';
 import 'package:auto_route/auto_route.dart';
@@ -9,15 +9,20 @@ import 'package:auto_route/auto_route.dart';
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     AutoRoute(
-      path: '/',
+      path: 'login',
+      page: LoginView,
+      initial: true,
+    ),
+    AutoRoute(
+      path: 'dashboard',
       page: DashboardPage,
       children: [
-        RedirectRoute(path: '', redirectTo: 'products'),
+        RedirectRoute(path: 'dashboard', redirectTo: 'products'),
         CustomRoute(
           path: 'products',
           page: ProductsPage,
-          initial: true,
           maintainState: false,
+          initial: true,
         ),
         CustomRoute(
             path: 'products/:gtin',
@@ -26,7 +31,6 @@ import 'package:auto_route/auto_route.dart';
         CustomRoute(path: 'products/new', page: AddProductPage),
       ],
     ),
-    AutoRoute(path: '/login', page: LoginPage)
   ],
 )
 class $MainRouter {}

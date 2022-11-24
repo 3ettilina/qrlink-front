@@ -1,16 +1,15 @@
-import 'package:admin_panel/ui/app/app.dart';
-import 'package:admin_panel/ui/app/constants/constants.dart';
+import 'package:admin_panel/firebase_options.dart';
+import 'package:admin_panel/ui/app/constants/colors.dart';
+import 'package:admin_panel/ui/app/constants/strings.dart';
 import 'package:admin_panel/ui/app/routes/main_router.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void configureApp() {
-  setUrlStrategy(PathUrlStrategy());
-}
+import 'ui/firebase_auth_ui/login/view/login_view.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -19,7 +18,6 @@ class MyApp extends StatelessWidget {
 
   final _appRouter = MainRouter();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -32,19 +30,5 @@ class MyApp extends StatelessWidget {
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const DashboardPage();
   }
 }

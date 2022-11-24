@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 
 class GetProductState extends StatelessWidget {
   const GetProductState(
@@ -15,7 +15,7 @@ class GetProductState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(width: 300, child: Lottie.asset(assetName)),
+          // SizedBox(width: 300, child: Lottie.asset(assetName)),
           Text(
             label,
           ),

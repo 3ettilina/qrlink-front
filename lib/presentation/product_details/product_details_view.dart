@@ -28,16 +28,6 @@ class ProductView extends StatelessWidget {
                 ),
               ),
             ),
-            Card(
-              color: Colors.lightGreen,
-              margin: const EdgeInsets.only(top: 10, bottom: 20),
-              elevation: 0,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
-                child: Text(product.name),
-              ),
-            ),
             _resourcesList(resources),
           ],
         ),
