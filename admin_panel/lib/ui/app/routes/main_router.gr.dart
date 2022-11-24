@@ -11,36 +11,35 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/material.dart' as _i8;
+import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:flutter/material.dart' as _i7;
 
 import '../../add_product/add_product_page.dart' as _i5;
-import '../../add_resource/add_resource_page.dart' as _i6;
 import '../../auth/login_page.dart' as _i2;
 import '../../product_details/product_details_page.dart' as _i4;
 import '../../products_list/products_page.dart' as _i3;
 import '../app.dart' as _i1;
 
-class MainRouter extends _i7.RootStackRouter {
-  MainRouter([_i8.GlobalKey<_i8.NavigatorState>? navigatorKey])
+class MainRouter extends _i6.RootStackRouter {
+  MainRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i7.PageFactory> pagesMap = {
+  final Map<String, _i6.PageFactory> pagesMap = {
     DashboardRoute.name: (routeData) {
-      return _i7.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.DashboardPage(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i7.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.LoginPage(),
       );
     },
     ProductsRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i6.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i3.ProductsPage(),
         maintainState: false,
@@ -53,29 +52,21 @@ class MainRouter extends _i7.RootStackRouter {
       final args = routeData.argsAs<ProductDetailsRouteArgs>(
           orElse: () =>
               ProductDetailsRouteArgs(gtin: pathParams.getString('gtin')));
-      return _i7.CustomPage<dynamic>(
+      return _i6.CustomPage<dynamic>(
         routeData: routeData,
         child: _i4.ProductDetailsPage(
           gtin: args.gtin,
           key: args.key,
         ),
-        transitionsBuilder: _i7.TransitionsBuilders.zoomIn,
+        transitionsBuilder: _i6.TransitionsBuilders.zoomIn,
         opaque: true,
         barrierDismissible: false,
       );
     },
     AddProductRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i6.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i5.AddProductPage(),
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
-    AddResourceRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
-        routeData: routeData,
-        child: const _i6.AddResourcePage(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -83,41 +74,36 @@ class MainRouter extends _i7.RootStackRouter {
   };
 
   @override
-  List<_i7.RouteConfig> get routes => [
-        _i7.RouteConfig(
+  List<_i6.RouteConfig> get routes => [
+        _i6.RouteConfig(
           DashboardRoute.name,
           path: '/',
           children: [
-            _i7.RouteConfig(
+            _i6.RouteConfig(
               '#redirect',
               path: '',
               parent: DashboardRoute.name,
               redirectTo: 'products',
               fullMatch: true,
             ),
-            _i7.RouteConfig(
+            _i6.RouteConfig(
               ProductsRoute.name,
               path: 'products',
               parent: DashboardRoute.name,
             ),
-            _i7.RouteConfig(
+            _i6.RouteConfig(
               ProductDetailsRoute.name,
               path: 'products/:gtin',
               parent: DashboardRoute.name,
             ),
-            _i7.RouteConfig(
+            _i6.RouteConfig(
               AddProductRoute.name,
               path: 'products/new',
               parent: DashboardRoute.name,
             ),
-            _i7.RouteConfig(
-              AddResourceRoute.name,
-              path: 'products/:gtin/resources/new',
-              parent: DashboardRoute.name,
-            ),
           ],
         ),
-        _i7.RouteConfig(
+        _i6.RouteConfig(
           LoginRoute.name,
           path: '/login',
         ),
@@ -126,8 +112,8 @@ class MainRouter extends _i7.RootStackRouter {
 
 /// generated route for
 /// [_i1.DashboardPage]
-class DashboardRoute extends _i7.PageRouteInfo<void> {
-  const DashboardRoute({List<_i7.PageRouteInfo>? children})
+class DashboardRoute extends _i6.PageRouteInfo<void> {
+  const DashboardRoute({List<_i6.PageRouteInfo>? children})
       : super(
           DashboardRoute.name,
           path: '/',
@@ -139,7 +125,7 @@ class DashboardRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.LoginPage]
-class LoginRoute extends _i7.PageRouteInfo<void> {
+class LoginRoute extends _i6.PageRouteInfo<void> {
   const LoginRoute()
       : super(
           LoginRoute.name,
@@ -151,7 +137,7 @@ class LoginRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.ProductsPage]
-class ProductsRoute extends _i7.PageRouteInfo<void> {
+class ProductsRoute extends _i6.PageRouteInfo<void> {
   const ProductsRoute()
       : super(
           ProductsRoute.name,
@@ -163,10 +149,10 @@ class ProductsRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.ProductDetailsPage]
-class ProductDetailsRoute extends _i7.PageRouteInfo<ProductDetailsRouteArgs> {
+class ProductDetailsRoute extends _i6.PageRouteInfo<ProductDetailsRouteArgs> {
   ProductDetailsRoute({
     required String gtin,
-    _i8.Key? key,
+    _i7.Key? key,
   }) : super(
           ProductDetailsRoute.name,
           path: 'products/:gtin',
@@ -188,7 +174,7 @@ class ProductDetailsRouteArgs {
 
   final String gtin;
 
-  final _i8.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -198,7 +184,7 @@ class ProductDetailsRouteArgs {
 
 /// generated route for
 /// [_i5.AddProductPage]
-class AddProductRoute extends _i7.PageRouteInfo<void> {
+class AddProductRoute extends _i6.PageRouteInfo<void> {
   const AddProductRoute()
       : super(
           AddProductRoute.name,
@@ -206,16 +192,4 @@ class AddProductRoute extends _i7.PageRouteInfo<void> {
         );
 
   static const String name = 'AddProductRoute';
-}
-
-/// generated route for
-/// [_i6.AddResourcePage]
-class AddResourceRoute extends _i7.PageRouteInfo<void> {
-  const AddResourceRoute()
-      : super(
-          AddResourceRoute.name,
-          path: 'products/:gtin/resources/new',
-        );
-
-  static const String name = 'AddResourceRoute';
 }

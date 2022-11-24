@@ -1,4 +1,4 @@
-import 'package:admin_panel/ui/add_resource/widgets/input_text.dart';
+import 'package:admin_panel/ui/app/widgets/input_text.dart';
 import 'package:admin_panel/ui/app/constants/constants.dart';
 import 'package:admin_panel/ui/app/widgets/common_button.dart';
 import 'package:admin_panel/ui/product_details/widgets/add_resource/bloc/add_resource_bloc.dart';
@@ -128,8 +128,7 @@ class _AddResourceFormState extends State<AddResourceForm> {
                                   ));
                                 }
                               },
-                              content:
-                                  Center(child: Icon(Icons.add, size: 25)))),
+                              content: const Icon(Icons.add, size: 25))),
                     ],
                   ),
                 ),

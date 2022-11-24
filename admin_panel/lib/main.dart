@@ -23,8 +23,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: ThemeData(
+        colorSchemeSeed: AppColors.lile_500,
+        cardColor: AppColors.lileShadow,
+      ),
       title: AppStrings.appTitle,
-      theme: ThemeData(primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false,
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
