@@ -119,11 +119,16 @@ class _EditProductFormState extends State<EditProductForm> {
                               bloc.add(EditProductEventRequest(
                                 gtin: state.product.gtin,
                                 name: name!,
+<<<<<<< HEAD
                                 resourceUrl:
                                     url == widget.resourceUrl ? null : url,
                                 isOnlyRedirect: redirect == widget.onlyRedirect
                                     ? null
                                     : redirect,
+=======
+                                resourceUrl: url!,
+                                isOnlyRedirect: redirect ?? false,
+>>>>>>> 7825607 ([TASK-99] Agregar Switch onlyRedirect - + Mejoras)
                               ));
                             }
                           },
