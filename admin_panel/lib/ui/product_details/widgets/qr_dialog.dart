@@ -47,7 +47,7 @@ Future<void> showQRDialog(
                         height: 15,
                       ),
                       CommonButton(
-                          label: 'Copiar',
+                          label: 'Copiar URL',
                           onTap: () async {
                             Clipboard.setData(ClipboardData(text: url))
                                 .then((_) {
