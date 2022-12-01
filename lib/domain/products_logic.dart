@@ -34,8 +34,8 @@ class ProductsLogic {
             return ProductResult(
                 product: product, type: ProductResultType.hasResources);
           } else {
-            // Get resource URL of the item
-            final resourceUrl = product.resources[0].resourceUrl;
+            // Get resource URL of the product (defaultUrl)
+            final resourceUrl = product.resourceUrl;
             // Redirect
             OpenUrl.byString(resourceUrl);
             return ProductResult(
