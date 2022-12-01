@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qrlink/domain/models/product.dart';
-import 'package:qrlink/domain/models/resource.dart';
 import 'package:qrlink/domain/products_logic.dart';
 import 'package:qrlink/presentation/constants/constants.dart';
 
@@ -13,7 +12,6 @@ class ProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resources = product.resources;
     return ListView(
       scrollDirection: Axis.vertical,
       children: [
@@ -28,7 +26,7 @@ class ProductView extends StatelessWidget {
                 ),
               ),
             ),
-            _resourcesList(resources),
+            _resourcesList(product),
           ],
         ),
       ],
@@ -36,12 +34,31 @@ class ProductView extends StatelessWidget {
   }
 }
 
-Widget _resourcesList(List<Resource> resources) {
+Widget _resourcesList(Product product) {
   return Container(
     alignment: Alignment.topCenter,
     padding: const EdgeInsets.symmetric(horizontal: 35.0),
-    child: Column(
-      children: resources
+    child: Column(children: [
+      GestureDetector(
+        onTap: () => ProductsLogic.openProductResource(product.resourceUrl),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          elevation: 1,
+          color: Colors.blueGrey[100],
+          child: ListTile(
+            leading: const Icon(Icons.link),
+            title: Text(
+              product.name,
+              // style: TextStyle(color: Colors.white),
+            ),
+            subtitle: const Text('gs1:defaultLink'),
+          ),
+        ),
+      ),
+      ...product.resources
           .map((res) => SizedBox(
                 width: double.infinity,
                 child: GestureDetector(
@@ -66,6 +83,6 @@ Widget _resourcesList(List<Resource> resources) {
                 ),
               ))
           .toList(),
-    ),
+    ]),
   );
 }
