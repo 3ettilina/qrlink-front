@@ -4,6 +4,7 @@ import 'package:admin_panel/domain/logic/get_product_details.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_event.dart';
 import 'package:admin_panel/ui/product_details/bloc/product_details_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ProductDetailsBloc
     extends Bloc<ProductDetailsEvent, ProductDetailsState> {

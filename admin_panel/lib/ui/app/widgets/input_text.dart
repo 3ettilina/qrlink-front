@@ -10,6 +10,7 @@ class InputText extends StatelessWidget {
     this.initialValue,
     required this.onChange,
     this.allowSpaces = true,
+    this.onlyNumbers = false,
     Key? key,
     this.obscureText = false,
   }) : super(key: key);
@@ -20,6 +21,7 @@ class InputText extends StatelessWidget {
   final String? validatorMessage;
   final Function(String?) onChange;
   final bool allowSpaces;
+  final bool onlyNumbers;
   final bool obscureText;
 
   @override
@@ -30,6 +32,7 @@ class InputText extends StatelessWidget {
         initialValue: initialValue,
         inputFormatters: [
           if (!allowSpaces) FilteringTextInputFormatter.deny(RegExp(r'\s')),
+          if (onlyNumbers) FilteringTextInputFormatter.allow(RegExp('^[0-9]+')),
         ],
         onChanged: onChange,
         validator: (value) {

@@ -49,47 +49,51 @@ class ProductDetailsContent extends StatelessWidget {
         elevation: 5,
         shadowColor: AppColors.mustardShadow,
         color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Product details
-              ProductDetailsHeader(product: product),
-              const SizedBox(height: 15),
-              const CommonDivider(),
-              const SizedBox(height: 30),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Product details
+                ProductDetailsHeader(product: product),
+                const SizedBox(height: 15),
+                const CommonDivider(),
+                const SizedBox(height: 30),
 
-              // Resources List
-              if (resourceListToShow.isNotEmpty)
-                Expanded(
-                    child: ResourcesListContent(resources: resourceListToShow)),
+                CommonButton(
+                    label: 'Agregar recurso',
+                    type: CommonButtonType.success,
+                    width: 150,
+                    onTap: () async {
+                      final result = await showCommonDialog(context,
+                          title: 'Agregar recurso',
+                          content: BlocProvider(
+                            create: (context) =>
+                                AddResourceBloc(bloc.state.gtin!)
+                                  ..add(const AddResourceEventFetchData()),
+                            child: const AddResourceView(),
+                          ));
+                      if (result) {
+                        bloc.add(
+                            ProductDetailsProductSelected(gtin: state.gtin!));
+                      }
+                    }),
 
-              const SizedBox(height: 5),
-              CommonButton(
-                  label: 'Agregar recurso',
-                  onTap: () async {
-                    final result = await showCommonDialog(context,
-                        title: 'Agregar recurso',
-                        content: BlocProvider(
-                          create: (context) => AddResourceBloc(bloc.state.gtin!)
-                            ..add(const AddResourceEventFetchData()),
-                          child: const AddResourceView(),
-                        ));
-                    if (result) {
-                      bloc.add(
-                          ProductDetailsProductSelected(gtin: state.gtin!));
-                    }
-                  }),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
+                // Resources List
+                if (resourceListToShow.isNotEmpty)
+                  ResourcesListContent(resources: resourceListToShow),
 
-              const CommonDivider(),
-              const SizedBox(height: 30),
-              // DELETE PRODUCT
-              Center(
-                child: CommonButton(
+                const SizedBox(height: 20),
+
+                const CommonDivider(),
+                const SizedBox(height: 30),
+                // DELETE PRODUCT
+                CommonButton(
                   label: 'Eliminar producto',
+                  type: CommonButtonType.alert,
+                  width: 150,
                   onTap: () {
                     showCommonSnackbar(
                       context,
@@ -100,8 +104,8 @@ class ProductDetailsContent extends StatelessWidget {
                         gtin: product.gtin));
                   },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

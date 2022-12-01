@@ -18,18 +18,14 @@ class ResourcesListContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const ResourcesListHeader(),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 30),
-              child: Column(children: [
-                ...resources
-                    .map((Resource p) => GestureDetector(
-                        child: CustomListItem(content: _resourceToWidget(p))))
-                    .toList(),
-              ]),
-            ),
-          ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10, bottom: 30),
+          child: Column(children: [
+            ...resources
+                .map((Resource p) => GestureDetector(
+                    child: CustomListItem(content: _resourceToWidget(p))))
+                .toList(),
+          ]),
         ),
       ],
     );
