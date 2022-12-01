@@ -4,12 +4,12 @@ import 'package:admin_panel/ui/app/constants/strings.dart';
 import 'package:admin_panel/ui/app/routes/main_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-import 'ui/firebase_auth_ui/login/view/login_view.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  setPathUrlStrategy();
   runApp(MyApp());
 }
 

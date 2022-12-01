@@ -1,6 +1,5 @@
 import 'package:admin_panel/ui/app/widgets/input_text.dart';
-import 'package:admin_panel/ui/firebase_auth_ui/login/view/login_view.dart';
-
+import 'package:admin_panel/ui/auth/login/view/login_view.dart';
 import 'package:auth_service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

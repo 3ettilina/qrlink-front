@@ -15,7 +15,7 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
 
 import '../../add_product/add_product_page.dart' as _i5;
-import '../../firebase_auth_ui/login/view/login_view.dart' as _i1;
+import '../../auth/login/view/login_view.dart' as _i1;
 import '../../product_details/product_details_page.dart' as _i4;
 import '../../products_list/products_page.dart' as _i3;
 import '../app.dart' as _i2;
