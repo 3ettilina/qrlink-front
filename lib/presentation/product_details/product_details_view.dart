@@ -38,27 +38,8 @@ Widget _resourcesList(Product product) {
   return Container(
     alignment: Alignment.topCenter,
     padding: const EdgeInsets.symmetric(horizontal: 35.0),
-    child: Column(children: [
-      GestureDetector(
-        onTap: () => ProductsLogic.openProductResource(product.resourceUrl),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          elevation: 1,
-          color: Colors.blueGrey[100],
-          child: ListTile(
-            leading: const Icon(Icons.link),
-            title: Text(
-              product.name,
-              // style: TextStyle(color: Colors.white),
-            ),
-            subtitle: const Text('gs1:defaultLink'),
-          ),
-        ),
-      ),
-      ...product.resources
+    child: Column(
+      children: product.resources
           .map((res) => SizedBox(
                 width: double.infinity,
                 child: GestureDetector(
@@ -83,6 +64,6 @@ Widget _resourcesList(Product product) {
                 ),
               ))
           .toList(),
-    ]),
+    ),
   );
 }
