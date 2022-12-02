@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qrlink/domain/models/product.dart';
-import 'package:qrlink/domain/models/resource.dart';
 import 'package:qrlink/domain/products_logic.dart';
 import 'package:qrlink/presentation/constants/constants.dart';
 
@@ -13,7 +12,6 @@ class ProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resources = product.resources;
     return ListView(
       scrollDirection: Axis.vertical,
       children: [
@@ -28,7 +26,7 @@ class ProductView extends StatelessWidget {
                 ),
               ),
             ),
-            _resourcesList(resources),
+            _resourcesList(product),
           ],
         ),
       ],
@@ -36,12 +34,12 @@ class ProductView extends StatelessWidget {
   }
 }
 
-Widget _resourcesList(List<Resource> resources) {
+Widget _resourcesList(Product product) {
   return Container(
     alignment: Alignment.topCenter,
     padding: const EdgeInsets.symmetric(horizontal: 35.0),
     child: Column(
-      children: resources
+      children: product.resources
           .map((res) => SizedBox(
                 width: double.infinity,
                 child: GestureDetector(
