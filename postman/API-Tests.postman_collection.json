@@ -1,0 +1,3394 @@
+{
+	"info": {
+		"_postman_id": "904a60d2-dbaa-410d-8f5e-7fbea783c791",
+		"name": "Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24393237"
+	},
+	"item": [
+		{
+			"name": "GetProductResourcesTests",
+			"item": [
+				{
+					"name": "testResponseNoFiltering",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"2222222222222\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - has resources\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is off\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});\r",
+									"pm.test(\"Header resources return correct\", function () {\r",
+									"   pm.response.to.have.header(\"product\");\r",
+									"   let headerProd = pm.response.headers.get('product');\r",
+									"   pm.test(\"Header resources return correct - filtered correctly\", function () {\r",
+									"   pm.response.to.have.header(\"product\");\r",
+									"   let headerProd = pm.response.headers.get('product');\r",
+									"   pm.expect(headerProd).to.contain('\"gtin\":\"2222222222222\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:defaultLink\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name1\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"en\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.default.com\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:recipeInfo\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name2\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.receta.com\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"es\"');\r",
+									"   pm.expect(headerProd).to.contain('only_redirect\":false');\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"2222222222222\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin={{getDetailsTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{getDetailsTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testResponseLinktypeFiltering",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"2222222222222\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - has resources\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"});\r",
+									"pm.test(\"Correct filtering - resources are all of recipeInfo type\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"    jsonData.resources.forEach(function(item) {\r",
+									"        pm.expect(item.link_type).to.eql(\"gs1:recipeInfo\")  \r",
+									"});\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is off\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});\r",
+									"pm.test(\"Header resources return correct - filtered correctly\", function () {\r",
+									"   pm.response.to.have.header(\"product\");\r",
+									"   let headerProd = pm.response.headers.get('product');\r",
+									"   pm.expect(headerProd).to.contain('\"gtin\":\"2222222222222\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"link_type\":\"gs1:defaultLink\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"name\":\"name1\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"resource_url\":\"www.default.com\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:recipeInfo\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name2\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.receta.com\"');\r",
+									"   pm.expect(headerProd).to.contain('only_redirect\":false');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin={{getDetailsTestingGTIN}}&linkType=gs1:recipeInfo",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{getDetailsTestingGTIN}}"
+								},
+								{
+									"key": "linkType",
+									"value": "gs1:recipeInfo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testResponseLinktypeFiltering-NoMatches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"2222222222222\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - has resources\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"});\r",
+									"pm.test(\"Correct filtering - resources are different types\", function () {\r",
+									"    var flag = new Boolean(false);\r",
+									"    var lastType = jsonData.resources[0].link_type;\r",
+									"    jsonData.resources.forEach(function(item) {\r",
+									"        if (item.link_type !== lastType){\r",
+									"            flag = true;\r",
+									"        }\r",
+									"        lastType = item.link_type;  \r",
+									"    });\r",
+									"    pm.expect(flag).to.eql(true);\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is off\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});\r",
+									"pm.test(\"Header resources return correct - return whole product\", function () {\r",
+									"   pm.response.to.have.header(\"product\");\r",
+									"   let headerProd = pm.response.headers.get('product');\r",
+									"   pm.expect(headerProd).to.contain('\"gtin\":\"2222222222222\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:defaultLink\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name1\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"en\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.default.com\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:recipeInfo\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name2\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"es\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.receta.com\"');\r",
+									"   pm.expect(headerProd).to.contain('only_redirect\":false');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin={{getDetailsTestingGTIN}}&linkType=gs1:careersInfo",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{getDetailsTestingGTIN}}"
+								},
+								{
+									"key": "linkType",
+									"value": "gs1:careersInfo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testResponseWithLangHeader",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"2222222222222\");\r",
+									"});\r",
+									"pm.test(\"Correct language filtering - resources are for FR\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"    pm.expect(jsonData.resources[0].language).to.eql(\"fr\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is off\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});\r",
+									"pm.test(\"Header resources return correct - filtered correctly\", function () {\r",
+									"   pm.response.to.have.header(\"product\");\r",
+									"   let headerProd = pm.response.headers.get('product');\r",
+									"   pm.expect(headerProd).to.contain('\"gtin\":\"2222222222222\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"link_type\":\"gs1:defaultLink\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"name\":\"name1\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"resource_url\":\"www.default.com\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:faqs\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"fr\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name3\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.faq.com\"');\r",
+									"   pm.expect(headerProd).to.contain('only_redirect\":false');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "fr",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin={{getDetailsTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{getDetailsTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testResponseWithLangHeader-NoMatches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"2222222222222\");\r",
+									"});\r",
+									"pm.test(\"Correct language filtering - resources are for EN\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"    pm.expect(jsonData.resources[0].language).to.eql(\"en\");\r",
+									"});\r",
+									"pm.test(\"Correct filtering - resources are different languages\", function () {\r",
+									"    var flag = new Boolean(false);\r",
+									"    var lastLang = jsonData.resources[0].language;\r",
+									"    jsonData.resources.forEach(function(item) {\r",
+									"        if (item.language !== lastLang){\r",
+									"            flag = true;\r",
+									"        }\r",
+									"        lastLang = item.language;  \r",
+									"    });\r",
+									"    pm.expect(flag).to.eql(true);\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is off\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});\r",
+									"pm.test(\"Header resources return correct - return whole product\", function () {\r",
+									"   pm.response.to.have.header(\"product\");\r",
+									"   let headerProd = pm.response.headers.get('product');\r",
+									"   pm.expect(headerProd).to.contain('\"gtin\":\"2222222222222\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:defaultLink\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name1\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"en\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.default.com\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:recipeInfo\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name2\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"es\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.receta.com\"');\r",
+									"   pm.expect(headerProd).to.contain('only_redirect\":false');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin={{getDetailsTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{getDetailsTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testResponseWithLangHeaderAndLinkType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"2222222222222\");\r",
+									"});\r",
+									"pm.test(\"Correct language and linkType filtering - has single resource for ES\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"    pm.expect(jsonData.resources.length).to.eql(1);\r",
+									"    pm.expect(jsonData.resources[0].language).to.eql(\"es\");\r",
+									"    pm.expect(jsonData.resources[0].link_type).to.eql(\"gs1:recipeInfo\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is off\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});\r",
+									"pm.test(\"Header resources return correct - return whole product\", function () {\r",
+									"   pm.response.to.have.header(\"product\");\r",
+									"   let headerProd = pm.response.headers.get('product');\r",
+									"   pm.expect(headerProd).to.contain('\"gtin\":\"2222222222222\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"link_type\":\"gs1:defaultLink\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"name\":\"name1\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"language\":\"en\"');\r",
+									"   pm.expect(headerProd).to.not.contain('\"resource_url\":\"www.default.com\"');\r",
+									"   pm.expect(headerProd).to.contain('\"link_type\":\"gs1:recipeInfo\"');\r",
+									"   pm.expect(headerProd).to.contain('\"name\":\"name2\"');\r",
+									"   pm.expect(headerProd).to.contain('\"language\":\"es\"');\r",
+									"   pm.expect(headerProd).to.contain('\"resource_url\":\"www.receta.com\"');\r",
+									"   pm.expect(headerProd).to.contain('only_redirect\":false');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "es",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin={{getDetailsTestingGTIN}}&linkType=gs1:recipeInfo",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{getDetailsTestingGTIN}}"
+								},
+								{
+									"key": "linkType",
+									"value": "gs1:recipeInfo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testGetNonExistentProductResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin={{nonExistentGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{nonExistentGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testGetError-InvalidId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Not Found\");\r",
+									"});\r",
+									"pm.test(\"Header has no product return\", function () {\r",
+									"   pm.response.to.not.have.header(\"product\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin=abba",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "abba"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testGetError-IdNullSent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Internal Server Error\");\r",
+									"});\r",
+									"pm.test(\"Header has no product return\", function () {\r",
+									"   pm.response.to.not.have.header(\"product\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/getProductResources?gtin=",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"getProductResources"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GetProductDetailsTests",
+			"item": [
+				{
+					"name": "testResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"2222222222222\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - has resources\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"    pm.expect((jsonData.resources).length).to.not.eql(null);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resources correctly filled\", function () {\r",
+									"    const resourcesJsonStructure = ['name','link_type','language','resource_url'];\r",
+									"    jsonData.resources.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.all.keys(resourcesJsonStructure);     \r",
+									"});  \r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is off\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"2222222222222\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/admin/product?gtin={{getDetailsTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"admin",
+								"product"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{getDetailsTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testResponse-NonExistentProduct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error & message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.eql(\"El codigo del producto no existe!\");\r",
+									"});\r",
+									"pm.test(\"Correct path in response\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('path');\r",
+									"    pm.expect(jsonData.path).to.eql(\"/admin/product\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/admin/product?gtin={{nonExistentGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"admin",
+								"product"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{nonExistentGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testError-InvalidId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error & message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.eql(\"El codigo del producto no existe!\");\r",
+									"});\r",
+									"pm.test(\"Correct path in response\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('path');\r",
+									"    pm.expect(jsonData.path).to.eql(\"/admin/product\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/admin/product?gtin=acdc",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"admin",
+								"product"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "acdc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testDetailsError-IdNullSent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error & message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Internal Server Error\");\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.eql(\"'path' must be a non-empty String\");\r",
+									"});\r",
+									"pm.test(\"Correct path in response\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('path');\r",
+									"    pm.expect(jsonData.path).to.eql(\"/admin/product\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/admin/product?gtin=",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"admin",
+								"product"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AddProductTests",
+			"item": [
+				{
+					"name": "testResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"6666666666666\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - has resources\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"});\r",
+									"pm.test(\"Correct resource detail - Name\", function () {\r",
+									"    pm.expect(jsonData.resources[0].name).to.eql(\"AddProductTest\");\r",
+									"});\r",
+									"pm.test(\"Correct resource detail - Ignored Linktype, set as Default Link\", function () {\r",
+									"    pm.expect(jsonData.resources[0].link_type).to.eql(\"gs1:defaultLink\");\r",
+									"});\r",
+									"pm.test(\"Correct resource detail - Language\", function () {\r",
+									"    pm.expect(jsonData.resources[0].language).to.eql(\"dt\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is on\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gtin\": \"6666666666666\",\n    \"only_redirect\": true,\n    \"resources\": [{\n        \"name\": \"AddProductTest\",\n        \"resource_url\": \"exampleUrl\",\n        \"link_type\" : \"gs1:eventsInfo\",\n        \"language\" : \"dt\"\n    }]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addProduct",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptOnAlreadyUsedGtin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.eql(\"el producto ya existe\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gtin\": \"6666666666666\",\r\n    \"only_redirect\": false,\r\n    \"resources\": [{\r\n        \"name\": \"AddProductTest\",\r\n        \"resource_url\": \"exampleUrl\",\r\n        \"link_type\" : \"gs1:eventsInfo\",\r\n        \"language\" : \"dt\"\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addProduct",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testCheckToString",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"6\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - has resources\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resources');\r",
+									"});\r",
+									"pm.test(\"Correct resource detail - Name\", function () {\r",
+									"    pm.expect(jsonData.resources[0].name).to.eql(\"5\");\r",
+									"});\r",
+									"pm.test(\"Correct resource detail - Ignored Linktype, set as Default Link\", function () {\r",
+									"    pm.expect(jsonData.resources[0].link_type).to.eql(\"gs1:defaultLink\");\r",
+									"});\r",
+									"pm.test(\"Correct resource detail - Language\", function () {\r",
+									"    pm.expect(jsonData.resources[0].language).to.eql(\"2\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - redirect switch is on\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gtin\": 6,\r\n    \"only_redirect\": true,\r\n    \"resources\": [{\r\n        \"name\": 5,\r\n        \"resource_url\": 4,\r\n        \"link_type\" : 3,\r\n        \"language\" : 2\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addProduct",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNullGtin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gtin\": null,\r\n    \"only_redirect\": false,\r\n    \"resources\": [{\r\n        \"name\": \"AddProductTest\",\r\n        \"resource_url\": \"exampleUrl\",\r\n        \"link_type\" : \"gs1:eventsInfo\",\r\n        \"language\" : \"dt\"\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addProduct",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNullFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - has error field\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.include(\"is marked non-null but is null\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gtin\": 66,\r\n    \"only_redirect\": null,\r\n    \"resources\": [{\r\n        \"name\": null,\r\n        \"resource_url\": null,\r\n        \"link_type\" : null,\r\n        \"language\" : null\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addProduct",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testMissingFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"producto tiene resource mal formado\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gtin\": \"666\",\r\n    \"resources\": [{}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addProduct",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNoBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addProduct",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AddResourceToProductTests",
+			"item": [
+				{
+					"name": "testResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"only_redirect\\\": false,\\n    \\\"resources\\\": [{\\n        \\\"name\\\": \\\"Salsa de tomate Campbell\\\",\\r\\n   \\\"language\\\": \\\"ex\\\",\\n        \\\"resource_url\\\": \\\"www.google.com\\\"\\n    }]\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"test_string_1\",\r\n   \"link_type\":\"test_string_2\",\r\n   \"language\":\"test_string_3\",\r\n   \"resource_url\":\"test_string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addResource?gtin={{addResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{addResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testCheckToString",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":1,\r\n   \"link_type\":2,\r\n   \"language\":3,\r\n   \"resource_url\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addResource?gtin={{addResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{addResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNonExistentProductGTINResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.eql(\"El codigo del producto no existe!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"test_string_1\",\r\n   \"link_type\":\"test_string_2\",\r\n   \"language\":\"test_string_3\",\r\n   \"resource_url\":\"test_string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addResource?gtin={{nonExistentGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{nonExistentGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNullProductGTIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"test_string_1\",\r\n   \"link_type\":\"test_string_2\",\r\n   \"language\":\"test_string_3\",\r\n   \"resource_url\":\"test_string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addResource?gtin=",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testBody-IncorrectFieldNames",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"Resource mal formado\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nombre\":\"test_string_1\",\r\n   \"llink\":\"test_string_2\",\r\n   \"ngage\":\"test_string_3\",\r\n   \"resource_url\":\"test_string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addResource?gtin={{addResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{addResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testBody-NoFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"Resource mal formado\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addResource?gtin={{addResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{addResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testBody-NullFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - has error field\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.include(\"is marked non-null but is null\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":null,\r\n   \"link_type\":null,\r\n   \"language\":null,\r\n   \"resource_url\":null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/addResource?gtin={{addResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"addResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{addResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EditResourceTests",
+			"item": [
+				{
+					"name": "testResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - name echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('name');\r",
+									"    pm.expect(jsonData.name).to.eql(\"string_1\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - link type echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('link_type');\r",
+									"    pm.expect(jsonData.link_type).to.eql(\"gs1:defaultLink\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - language echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('language');\r",
+									"    pm.expect(jsonData.language).to.eql(\"string_3\");\r",
+									"});\r",
+									"pm.test(\"Correct edit - url\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resource_url');\r",
+									"    pm.expect(jsonData.resource_url).to.eql(\"edited_url\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"7777777777777\\\",\\n    \\\"only_redirect\\\": false,\\n    \\\"resources\\\": [{\\n        \\\"name\\\": \\\"string_1\\\",\\n        \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n        \\\"language\\\": \\\"string_3\\\",\\n        \\\"resource_url\\\": \\\"initial_url\\\"\\n    }]\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": \"edited_url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testCheckToString",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - name echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('name');\r",
+									"    pm.expect(jsonData.name).to.eql(\"string_1\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - link type echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('link_type');\r",
+									"    pm.expect(jsonData.link_type).to.eql(\"gs1:defaultLink\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - language echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('language');\r",
+									"    pm.expect(jsonData.language).to.eql(\"string_3\");\r",
+									"});\r",
+									"pm.test(\"Correct edit - url, stringified\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('resource_url');\r",
+									"    pm.expect(jsonData.resource_url).to.eql(\"777\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": 777\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNullUrl",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - has error field\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+									"});\r",
+									"pm.test(\"Correct detail - error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.include(\"is marked non-null but is null\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": null \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testGtinDoesntExist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"El codigo del producto no existe!\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"gs1:string_2\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": \"allo\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin=87654321",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "87654321"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNoLanguageInBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"No se encontro el recurso\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"resource_url\": \"allo\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNoLinkTypeInBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"No se encontro el recurso\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": \"example\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNoNameInBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"No se encontro el recurso\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": \"example\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testCantFindName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"No se encontro el recurso\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"bad_string_example\",\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": \"edited_url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testCantFindLinkType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"No se encontro el recurso\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"bad_string_example\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": \"edited_url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testCantFindLanguage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"No se encontro el recurso\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"language\": \"bad_string_example\",\r\n   \"resource_url\": \"edited_url\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/editResource?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"editResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GetProductTests",
+			"item": [
+				{
+					"name": "testResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - returns many products\", function () {\r",
+									"    pm.expect(jsonData.length>1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Correct structure on all products and their resources\", function () {\r",
+									"    const mainJsonStructure = ['gtin','resources','only_redirect'];\r",
+									"    const resourcesJsonStructure = ['name','link_type','language','resource_url'];\r",
+									"\r",
+									"    jsonData.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.all.keys(mainJsonStructure); \r",
+									"\r",
+									"        item.resources.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.all.keys(resourcesJsonStructure);     \r",
+									"        });    \r",
+									"    });  \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"/**\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"8888888888888\\\",\\n    \\\"only_redirect\\\": false,\\n    \\\"resources\\\": [{\\n        \\\"name\\\": \\\"Salsa de tomate Campbell\\\",\\n        \\\"resource_url\\\": \\\"www.google.com\\\"\\n    }]\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"only_redirect\\\": false,\\n    \\\"resources\\\": [{\\n        \\\"name\\\": \\\"Salsa de tomate Campbell\\\",\\n        \\\"resource_url\\\": \\\"www.google.com\\\"\\n    }]\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/product/getProducts",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"getProducts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SetOnlyRedirectTests",
+			"item": [
+				{
+					"name": "testResponse-True",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"7777777777777\");\r",
+									"});\r",
+									"pm.test(\"Correct property change - only_redirect is now true\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(true);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"7777777777777\\\",\\n    \\\"only_redirect\\\": false,\\n    \\\"resources\\\": [{\\n        \\\"name\\\": \\\"string_1\\\",\\n        \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n        \\\"language\\\": \\\"string_3\\\",\\n        \\\"resource_url\\\": \\\"initial_url\\\"\\n    }]\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"only_redirect\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/setOnlyRedirect?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"setOnlyRedirect"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testResponse-False",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct detail - gtin echo\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('gtin');\r",
+									"    pm.expect(jsonData.gtin).to.eql(\"7777777777777\");\r",
+									"});\r",
+									"pm.test(\"Correct property change - only_redirect is now true\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('only_redirect');\r",
+									"    pm.expect(jsonData.only_redirect).to.eql(false);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"7777777777777\\\",\\n    \\\"only_redirect\\\": true,\\n    \\\"resources\\\": [{\\n        \\\"name\\\": \\\"string_1\\\",\\n        \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n        \\\"language\\\": \\\"string_3\\\",\\n        \\\"resource_url\\\": \\\"initial_url\\\"\\n    }]\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"only_redirect\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/setOnlyRedirect?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"setOnlyRedirect"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNoBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/setOnlyRedirect?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"setOnlyRedirect"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testBodyFieldNull",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"only_redirect\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/setOnlyRedirect?gtin={{editTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"setOnlyRedirect"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{editTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DeleteProductTests",
+			"item": [
+				{
+					"name": "testResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"8888888888888\\\",\\n    \\\"only_redirect\\\": false,\\n    \\\"resources\\\": [{\\n        \\\"name\\\": \\\"Salsa de tomate Campbell\\\",\\r\\n   \\\"language\\\": \\\"ex\\\",\\n        \\\"resource_url\\\": \\\"www.google.com\\\"\\n    }]\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/product/delete?gtin={{deleteTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testNonExistentGTIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Correct error message\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"El codigo del producto no existe!\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseEndpoint}}/product/delete?gtin={{nonExistentGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{nonExistentGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DeleteResourceTest",
+			"item": [
+				{
+					"name": "testResponse",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"9999999999999\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"string_1\",\r\n   \"link_type\":\"string_2\",\r\n   \"language\":\"string_3\",\r\n   \"resource_url\":\"string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptDeleteDefaultResource",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"name1\",\r\n   \"link_type\":\"gs1:defaultLink\",\r\n   \"language\":\"en\",\r\n   \"resource_url\":\"www.default.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptDeleteNonExistentResource",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"a\",\r\n   \"link_type\":\"b\",\r\n   \"language\":\"c\",\r\n   \"resource_url\":\"d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptIncompleteBody-Name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"link_type\":\"string_2\",\r\n   \"language\":\"string_3\",\r\n   \"resource_url\":\"string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptIncompleteBody-LinkType",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"string_1\",\r\n   \"language\":\"string_3\",\r\n   \"resource_url\":\"string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptIncompleteBody-Language",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"string_1\",\r\n   \"link_type\":\"string_2\",\r\n   \"resource_url\":\"string_4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptIncompleteBody-URL",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"string_1\",\r\n   \"link_type\":\"string_2\",\r\n   \"language\":\"string_3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testAttemptEmptyBody",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addProduct',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\n    \\\"gtin\\\": \\\"5555555555555\\\",\\n    \\\"resources\\\": [\\n        {\\n            \\\"name\\\": \\\"name1\\\",\\n            \\\"link_type\\\": \\\"gs1:defaultLink\\\",\\n            \\\"language\\\": \\\"en\\\",\\n            \\\"resource_url\\\": \\\"www.default.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name2\\\",\\n            \\\"link_type\\\": \\\"gs1:recipeInfo\\\",\\n            \\\"language\\\": \\\"es\\\",\\n            \\\"resource_url\\\": \\\"www.receta.com\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"name3\\\",\\n            \\\"link_type\\\": \\\"gs1:faqs\\\",\\n            \\\"language\\\": \\\"fr\\\",\\n            \\\"resource_url\\\": \\\"www.faq.com\\\"\\n        }\\n    ],\\n    \\\"only_redirect\\\": false\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t},\r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'http://qrlink-dev.rj.r.appspot.com/product/addResource?gtin=5555555555555',\r",
+									"    method: 'POST',\r",
+									"    \"body\": {\r",
+									"\t\t\t\t\t\"mode\": \"raw\",\r",
+									"\t\t\t\t\t\"raw\": \"{\\r\\n   \\\"name\\\": \\\"string_1\\\",\\r\\n   \\\"link_type\\\": \\\"string_2\\\",\\r\\n   \\\"language\\\": \\\"string_3\\\",\\r\\n   \\\"resource_url\\\": \\\"string_4\\\"\\r\\n}\",\r",
+									"\t\t\t\t\t\"options\": {\r",
+									"\t\t\t\t\t\t\"raw\": {\r",
+									"\t\t\t\t\t\t\t\"language\": \"json\"\r",
+									"\t\t\t\t\t\t}\r",
+									"\t\t\t\t\t}\r",
+									"\t\t\t\t}, \r",
+									"}, function (err, res) {\r",
+									"    console.log(res);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{deleteResourceTestingGTIN}}",
+							"host": [
+								"{{baseEndpoint}}"
+							],
+							"path": [
+								"product",
+								"deleteResource"
+							],
+							"query": [
+								{
+									"key": "gtin",
+									"value": "{{deleteResourceTestingGTIN}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
