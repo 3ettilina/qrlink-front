@@ -25,12 +25,30 @@ class BackEndpoints {
   ///  ]
   /// }
   /// ```
-  static Uri getProductResources(String gtin) =>
-      Uri.https(baseUrlDev, '/getProductResources', {'gtin': gtin});
+  static Uri getProductResources({required String gtin, String? linkType}) {
+    if (linkType != null && linkType.isNotEmpty) {
+      return Uri.https(baseUrlDev, '/getProductResources', {
+        'gtin': gtin,
+        'linkType': linkType,
+      });
+    } else {
+      return Uri.https(baseUrlDev, '/getProductResources', {
+        'gtin': gtin,
+      });
+    }
+  }
 }
 
 class WebUrls {
   static String baseWebUrlDev() => window.location.href.split('/#/')[0];
-  static String webGetProductDetails(String gtin) =>
-      '${baseWebUrlDev()}/?gtin=$gtin';
+  static String webGetProductDetails({
+    required String gtin,
+    String? linkType,
+  }) {
+    if (linkType != null && linkType.isNotEmpty) {
+      return '${baseWebUrlDev()}/?gtin=$gtin&linkType=$linkType';
+    } else {
+      return '${baseWebUrlDev()}/?gtin=$gtin';
+    }
+  }
 }

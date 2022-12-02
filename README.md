@@ -1,16 +1,19 @@
-# qrlink
+# QR Link
 
-A new Flutter project.
+Proyecto de Tópicos Avanzados en Ingeniería de Software, UCUDAL 2022.
 
-## Getting Started
+## Deployar
 
-This project is a starting point for a Flutter application.
+### Admin Panel
+````
+cd admin_panel
+flutter build web --web-renderer canvaskit
+cd ..
+firebase deploy --only hosting:admin-panel
+````
+### Web app para el usuario final
+````
+flutter build web --web-renderer canvaskit
+firebase deploy --only hosting:web
+````
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

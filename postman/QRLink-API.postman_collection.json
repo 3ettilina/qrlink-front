@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "e47d2ac6-c2f5-43a9-b4b9-6e5f4a35134a",
+		"name": "API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24393237"
+	},
+	"item": [
+		{
+			"name": "getProductResources",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseEndpoint}}/getProductResources?gtin={{exampleGTIN}}",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"getProductResources"
+					],
+					"query": [
+						{
+							"key": "gtin",
+							"value": "{{exampleGTIN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductDetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseEndpoint}}/admin/product?gtin={{exampleGTIN}}",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"admin",
+						"product"
+					],
+					"query": [
+						{
+							"key": "gtin",
+							"value": "{{exampleGTIN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addResourceToProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\": \"string_1\",\r\n   \"link_type\": \"gs1:string_2\",\r\n   \"language\": \"string_3\",\r\n   \"resource_url\": \"www.string_4.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseEndpoint}}/product/addResource?gtin={{exampleGTIN}}",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"product",
+						"addResource"
+					],
+					"query": [
+						{
+							"key": "gtin",
+							"value": "{{exampleGTIN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProduct",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gtin\": \"3333\",\n    \"only_redirect\": false,\n    \"resources\": [{\n        \"name\": \"Salsa de tomate Campbell\",\n        \"resource_url\": \"www.google.com\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseEndpoint}}/product/addProduct",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"product",
+						"addProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProduct",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseEndpoint}}/product/delete?gtin={{deleteTestingGTIN}}",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"product",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "gtin",
+							"value": "{{deleteTestingGTIN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteResource",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\":\"test_string_1\",\r\n   \"link_type\":\"test_string_2\",\r\n   \"language\":\"test_string_3\",\r\n   \"resource_url\":\"test_string_4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseEndpoint}}/product/deleteResource?gtin={{addResourceTestingGTIN}}",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"product",
+						"deleteResource"
+					],
+					"query": [
+						{
+							"key": "gtin",
+							"value": "{{addResourceTestingGTIN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLinkTypes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseEndpoint}}/admin/getLinkTypeList",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"admin",
+						"getLinkTypeList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editResource",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\": \"Wild Mushroom And Butternut Squash Risotto\",\r\n   \"link_type\": \"gs1:defaultLink\",\r\n   \"language\": \"en\",\r\n   \"resource_url\": \"www.string_4.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseEndpoint}}/product/editResource?gtin={{exampleGTIN}}",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"product",
+						"editResource"
+					],
+					"query": [
+						{
+							"key": "gtin",
+							"value": "{{exampleGTIN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseEndpoint}}/product/getProducts",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"product",
+						"getProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setOnlyRedirect",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"only_redirect\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseEndpoint}}/product/setOnlyRedirect?gtin={{exampleGTIN}}",
+					"host": [
+						"{{baseEndpoint}}"
+					],
+					"path": [
+						"product",
+						"setOnlyRedirect"
+					],
+					"query": [
+						{
+							"key": "gtin",
+							"value": "{{exampleGTIN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

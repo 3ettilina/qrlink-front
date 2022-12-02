@@ -6,9 +6,15 @@ import 'package:qrlink/domain/result/product_result.dart';
 import 'package:qrlink/domain/utils/open_url.dart';
 
 class ProductsLogic {
-  static Future<ProductResult> getProductResources(String gtin) async {
+  static Future<ProductResult> getProductResources({
+    required String gtin,
+    String? linkType,
+  }) async {
     try {
-      final productJson = await ProductsRepository.getProductResource(gtin);
+      final productJson = await ProductsRepository.getProductResource(
+        gtin: gtin,
+        linkType: linkType,
+      );
 
       if (productJson != null) {
         final product = Product.toProduct(productJson);
@@ -45,11 +51,15 @@ class ProductsLogic {
     }
   }
 
-  static void openGetProductResources(String gtin) {
-    OpenUrl.byString(WebUrls.webGetProductDetails(gtin));
+  static void openGetProductResources({
+    required String gtin,
+    String? linkType,
+  }) {
+    OpenUrl.byString(
+        WebUrls.webGetProductDetails(gtin: gtin, linkType: linkType));
   }
 
   static void openProductResource(String resourceUrl) {
-    OpenUrl.byString(resourceUrl);
+    OpenUrl.blankByString(resourceUrl);
   }
 }

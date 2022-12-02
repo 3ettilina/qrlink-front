@@ -7,7 +7,7 @@ class AppStrings {
   static String searchingResource = 'Buscando recurso...';
   static String welcome = 'Bienvenido a QRLink!';
   static String addGtinToSearchLabel =
-      'Ingresá el GTIN del producto para obtener más información del mismo:';
+      'Ingresá el GTIN y el link type deseado para obtener más información del mismo:';
   static String search = 'BUSCAR';
   static String productDetails = 'Recursos asociados al producto';
 }
